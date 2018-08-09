@@ -114,9 +114,7 @@ app({
         "Query"),
       h('div', {},
         items.map(item =>
-          h('input', {
-            value: item.author
-          })
+          h('li', {id: `li-${item.id}`}, item.data.author)
         )
       )
     ]),

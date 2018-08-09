@@ -43,7 +43,7 @@ function queryEffect(props, dispatch) {
     db.collection(props.props.collection).get().then((querySnapshot) => {
         const items = [] 
         querySnapshot.forEach((doc) => {
-            items.push(doc.data())
+            items.push({id: doc.id, data: doc.data()} )
         });
         dispatch(props.action, items)
     }).catch(e => {
