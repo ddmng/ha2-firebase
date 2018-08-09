@@ -2,34 +2,39 @@ import {
   app,
   h
 } from "/local_modules/hyperapp/src/index";
-import {
-  Http
-} from "/local_modules/fx/src/index";
 import hh from "/local_modules/hyperscript-helpers/src/index";
 const {
   main,
   input,
   button,
-  h2,
-  h4
 } = hh(h);
 import {
-  fireBaseLogin
+  FirebaseLogin
 } from './firebase';
 
 const Login = state => [{
     ...state,
     loggedin: "in_progress"
   },
-  {
+  FirebaseLogin({
     props: {
       username: state.username,
       password: state.password
     },
-    effect: fireBaseLogin
-  }
+    action: LoginSuccess,
+    error: LoginError
+  })
 ]
 
+const LoginSuccess = (state) => ({
+  ...state,
+  loggedin: "yes"
+})
+
+const LoginError = (state) => ({
+  ...state,
+  loggedin: "error"
+})
 
 const UpdateUsername = (state, {
   target: {
@@ -51,23 +56,29 @@ const UpdatePassword = (state, {
 
 app({
   init: {
+    username: "a@a.com",
+    password: "123456",
     loggedin: "no"
   },
   view: ({
+      username,
+      password,
       loggedin
     }) =>
     main({},
       input({
         placeholder: "username",
-        onInput: UpdateUsername
+        onInput: UpdateUsername,
+        value: username
       }),
       input({
         placeholder: "password",
-        onInput: UpdatePassword
+        onInput: UpdatePassword,
+        value: password
       }),
       button({
           onClick: Login,
-          disabled: loggedin !== "no"
+          disabled: loggedin === "yes" || loggedin === "in_progress"
         },
         "Login"),
     ),
