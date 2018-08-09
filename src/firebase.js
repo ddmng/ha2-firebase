@@ -5,7 +5,7 @@ import {
     assign
 } from "/local_modules/fx/src/utils.js"
 
-
+// Firebase configuration
 var config = {
     apiKey: "AIzaSyBvOqs9TkUxEM184yIFLCFhNaCsgxHzPTc",
     authDomain: "hyperapp-38ccc.firebaseapp.com",
@@ -15,11 +15,9 @@ var config = {
     messagingSenderId: "220388866281"
 };
 firebase.initializeApp(config);
+const db = firebase.firestore();
 
 function loginEffect(props, dispatch) {
-
-    console.log("Login to firebase in progress as", props.props.username)
-
     firebase.auth().signInWithEmailAndPassword(props.props.username, props.props.password)
         .then(result => {
             console.log("Authenticated", result)
@@ -36,16 +34,27 @@ function loginEffect(props, dispatch) {
 export function FirebaseLogin(props) {
     console.log("props: ", props)
     return {
-        props:props,
+        props: props,
         effect: loginEffect
     }
 }
 
-var db = firebase.firestore();
+function queryEffect(props, dispatch) {
+    db.collection(props.props.collection).get().then((querySnapshot) => {
+        const items = [] 
+        querySnapshot.forEach((doc) => {
+            items.push(doc.data())
+        });
+        dispatch(props.action, items)
+    }).catch(e => {
+        console.error("Error querying resource", e)
+    });
+}
 
-
-// db.collection("items").get().then((querySnapshot) => {
-//     querySnapshot.forEach((doc) => {
-//       console.log(`${doc.id}`, doc.data());
-//     });
-//   });
+export function FirebaseQuery(props) {
+    console.log("props: ", props)
+    return {
+        props: props,
+        effect: queryEffect
+    }
+}

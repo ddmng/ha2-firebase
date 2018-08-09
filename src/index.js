@@ -2,14 +2,18 @@ import {
   app,
   h
 } from "/local_modules/hyperapp/src/index";
-import hh from "/local_modules/hyperscript-helpers/src/index";
-const {
-  main,
-  input,
-  button,
-} = hh(h);
+// import hh from "/local_modules/hyperscript-helpers/src/index";
+// const {
+//   main,
+//   input,
+//   button,
+//   div,
+//   h3,
+//   span
+// } = hh(h);
 import {
-  FirebaseLogin
+  FirebaseLogin,
+  FirebaseQuery
 } from './firebase';
 
 const Login = state => [{
@@ -36,6 +40,24 @@ const LoginError = (state) => ({
   loggedin: "error"
 })
 
+const Query = state => [{
+    ...state,
+    querying: true
+  },
+  FirebaseQuery({
+    props: {
+      collection: "items"
+    },
+    action: FillItems
+  })
+]
+
+const FillItems = (state, items) => ({
+  ...state,
+  querying: false,
+  items: items
+})
+
 const UpdateUsername = (state, {
   target: {
     value
@@ -58,30 +80,44 @@ app({
   init: {
     username: "a@a.com",
     password: "123456",
-    loggedin: "no"
+    loggedin: "no",
+    querying: false,
+    items: []
   },
   view: ({
       username,
       password,
-      loggedin
+      loggedin,
+      querying,
+      items
     }) =>
-    main({},
-      input({
+    h('main', {}, [
+      h('input', {
         placeholder: "username",
         onInput: UpdateUsername,
         value: username
       }),
-      input({
+      h('input', {
         placeholder: "password",
         onInput: UpdatePassword,
         value: password
       }),
-      button({
+      h('button', {
           onClick: Login,
           disabled: loggedin === "yes" || loggedin === "in_progress"
         },
         "Login"),
-    ),
+      h('button', {
+          onClick: Query,
+          disabled: (loggedin !== "yes") || (querying === true)
+        },
+        "Query"),
+      items.map(item =>
+        h('input', {
+          value: item.author
+        })
+      )
+    ]),
   subscribe: console.log,
   container: document.querySelector("#app")
 });

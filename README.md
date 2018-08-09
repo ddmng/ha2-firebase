@@ -1,2 +1,2 @@
 # ha2-firebase
-Hyperapp V2 test with Firebase
+Exploring the new Hyperapp V2 WIP. A test with Firebase interactions.
