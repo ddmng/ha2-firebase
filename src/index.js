@@ -112,10 +112,12 @@ app({
           disabled: (loggedin !== "yes") || (querying === true)
         },
         "Query"),
-      items.map(item =>
-        h('input', {
-          value: item.author
-        })
+      h('div', {},
+        items.map(item =>
+          h('input', {
+            value: item.author
+          })
+        )
       )
     ]),
   subscribe: console.log,
