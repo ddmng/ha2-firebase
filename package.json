@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "parcel index.html",
+    "deploy": "firebase deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,14 +13,17 @@
   "license": "ISC",
   "dependencies": {
     "babel-cli": "^6.26.0",
-    "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "eslint": "^5.2.0",
+    "firebase": "^5.3.1",
+    "firebase-auth": "^0.1.2",
+    "firebaseui": "^3.2.0",
     "hyperapp-redux-devtools": "^1.1.6"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0"
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1"
   }
 }
