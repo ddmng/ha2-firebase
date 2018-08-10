@@ -5,10 +5,15 @@
   "main": "src/index.js",
   "scripts": {
     "start": "parcel index.html",
+    "build": "parcel build index.html --public-url ./",
     "deploy": "firebase deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["hyperapp", "firebase", "HAv2"],
+  "keywords": [
+    "hyperapp",
+    "firebase",
+    "HAv2"
+  ],
   "author": "ddmng",
   "license": "ISC",
   "dependencies": {
@@ -17,19 +22,6 @@
     "firebaseui": "^3.2.0",
     "mini.css": "^3.0.0"
   },
-  "babel": {
-    "presets": "env",
-    "plugins": [
-      [
-        "transform-object-rest-spread", 
-        ["transform-react-jsx",
-          {
-            "pragma": "h"
-          }
-        ]
-      ]
-    ]
-  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "eslint": "^5.2.0",
@@ -37,6 +29,8 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1"
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "node-sass": "^4.7.2"
   }
 }

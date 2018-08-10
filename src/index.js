@@ -18,12 +18,15 @@ import {
 
 const Login = state => [{
     ...state,
-    loggedin: "in_progress"
+    loginData: {
+      ...state.loginData,
+      loggedin: "in_progress"
+    }
   },
   FirebaseLogin({
     props: {
-      username: state.username,
-      password: state.password
+      username: state.loginData.username,
+      password: state.loginData.password
     },
     action: LoginSuccess,
     error: LoginError
@@ -32,12 +35,18 @@ const Login = state => [{
 
 const LoginSuccess = (state) => ({
   ...state,
-  loggedin: "yes"
+  loginData: {
+    ...state.loginData,
+    loggedin: "yes"
+  }
 })
 
 const LoginError = (state) => ({
   ...state,
-  loggedin: "error"
+  loginData: {
+    ...state.loginData,
+    loggedin: "error"
+  }
 })
 
 const Query = state => [{
@@ -64,7 +73,10 @@ const UpdateUsername = (state, {
   }
 }) => ({
   ...state,
-  username: value
+  loginData: {
+    ...state.loginData,
+    username: value
+  }
 });
 
 const UpdatePassword = (state, {
@@ -73,63 +85,42 @@ const UpdatePassword = (state, {
   }
 }) => ({
   ...state,
-  password: value
+  loginData: {
+    ...state.loginData,
+    password: value
+  }
 });
 
-const LoginForm = (state) => (
-  h('div', {
-    id: "loginform",
-    class: state.loggedin === "yes"?"hidden":"",
-  }, [
-    h('h3', {}, 'Welcome to My App'),
-    h('input', {
-      placeholder: "username",
-      onInput: UpdateUsername,
-      value: state.username
-    }),
-    h('input', {
-      placeholder: "password",
-      onInput: UpdatePassword,
-      value: state.password
-    }),
-    h('button', {
-        onClick: Login,
-        disabled: state.loggedin === "yes" || state.loggedin === "in_progress"
-      },
-      "Login"),
-  ])
-)
-
-const TestForm = () => (
-  h('h1', {}, [])
+const LoginForm = ( {state} ) => (
+  <div id="loginform" class={state.loginData.loggedin==="yes"?"hidden":""}>
+    <h3>Welcome to my app</h3>
+    <input placeholder="username" onInput={UpdateUsername} value={state.loginData.username} />
+    <input placeholder="password" onInput={UpdatePassword} value={state.loginData.password} />
+    <button onClick={Login} disabled={ (state.loginData.loggedin === "yes" || state.loginData.loggedin === "in_progress") }>Login</button>
+  </div>
 )
 
 app({
   init: {
-    username: "a@a.com",
-    password: "123456",
-    loggedin: "no",
+    loginData: {
+      username: "a@a.com",
+      password: "123456",
+      loggedin: "no",
+    },
     querying: false,
     items: []
   },
-  view: (state) =>
-    h('main', {}, [
-      LoginForm(state),
-      TestForm(),
-      
-      h('button', {
-          onClick: Query,
-          disabled: (state.loggedin !== "yes") || (state.querying === true)
-        },
-        "Query"),
-      h('div', {},
-        state.items.map(item =>
-          h('li', {
-            id: `li-${item.id}`
-          }, item.data.author)
-        )
-      )
-    ]),
+  view: (state) => (
+  <main>
+      <LoginForm state={state} />
+      <button onClick={Query} disabled= { (state.loginData.loggedin !== "yes") || (state.querying === true) }>Query</button>
+      <div>
+        {state.items.map( item  => (
+          <li id={ item.id }> { item.data.author } </li>
+        ))}
+      </div>
+  </main>
+  ),
   subscribe: console.log,
   container: document.querySelector("#app")
 });
