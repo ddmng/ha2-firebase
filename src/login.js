@@ -32,7 +32,7 @@ const LoginSuccess = (state) => [{
     props: {
       collection: "items"
     },
-    action: FillItems
+    action: LoadItems
   })]
   
 const LoginError = (state) => ({
@@ -67,7 +67,7 @@ const UpdateUsername = (state, {
     }
   });
   
-  const FillItems = (state, items) => ({
+  const LoadItems = (state, items) => ({
     ...state,
     querying: false,
     items: items

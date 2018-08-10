@@ -4,6 +4,23 @@ import {
 } from "/local_modules/hyperapp/src/index";
 import imgTrash from "../assets/trash-2.svg"
 import {LoginForm} from './login'
+import { DeleteItem } from './firebase'
+
+const Delete = (id) => (state) => [{
+  ...state,
+},
+DeleteItem({
+  props: {
+    collection: "items",
+    item: id,
+    action: ItemDeleted(id)
+  }
+})]
+
+const ItemDeleted = (id) => (state) => ({
+  ...state,
+  deleted: id
+})
 
 const Item = ({ id, author, dateAdded, text }) => (
   <div class="card small">
@@ -13,7 +30,7 @@ const Item = ({ id, author, dateAdded, text }) => (
           <small>[{ id }]</small> { author }
         </div>
         <div class="col-sm-1">
-          <span ><img class="closebtn" src={ imgTrash }></img></span>
+          <span onClick={ Delete(id) } ><img class="closebtn" src={ imgTrash }></img></span>
         </div>
       </div>
     </div>

@@ -62,3 +62,19 @@ export function FirebaseQuery(props) {
         effect: queryEffect
     }
 }
+
+
+export function DeleteItem(props) {
+    console.log("props: ", props)
+    return {
+        props: props,
+        effect: deleteItemEffect
+    }
+  }
+  
+  function deleteItemEffect(props, dispatch) {
+    db.collection(props.props.collection).doc(props.props.item).delete().then(
+        () => dispatch(props.props.action, props.props.item)
+    ).catch( error => console.log("Error deleting", props.props.item))
+    
+  }
