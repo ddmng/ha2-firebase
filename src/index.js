@@ -39,6 +39,43 @@ const Item = ({ id, author, dateAdded, text }) => (
   </div>
 )
 
+const ItemsList = ({state}) => (
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <div class="row">
+      {
+        state.items.map( item  => (
+          <Item id={item.id} author={item.data.author} dateAdded={item.data.dateAdded} text={item.data.text} />
+        ))
+      }
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+)
+
+const InputForm = ({ state }) => (
+  <div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
+      <div class="input-group">
+        <label for="newtodo">Todo: </label>
+        <input placeholder="Add a new todo..." onInput={UpdateNewTodo} value={state.newtodo} />
+        <div class="button-group">
+            <button><span class="icon-bookmark"></span> New</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-1"></div>
+  </div>
+)
+
+const UpdateNewTodo = (state, {target: {value}}) => ({
+  ...state,
+  newtodo: value
+})
+
 app({
   init: {
     loginData: {
@@ -62,18 +99,10 @@ app({
         <div class="col-sm-2"></div>
       </div>
 
-      <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-        <div class="row">
-            {state.items.map( item  => (
-              <Item id={item.id} author={item.data.author} dateAdded={item.data.dateAdded} text={item.data.text} />
-            ))}
-        </div>
-        </div>
-        <div class="col-md-1"></div>
-      </div>
+      { state.loginData.loggedin==="yes"?<ItemsList state={state} />:"" }
+      { state.loginData.loggedin==="yes"?<InputForm state={state} />:"" }
     </div>
+
   </main>
   ),
   subscribe: console.log,
