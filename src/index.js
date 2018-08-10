@@ -6,6 +6,7 @@ import {
   FirebaseLogin,
   FirebaseQuery
 } from './firebase';
+import imgTrash from "../assets/trash-2.svg"
 
 const Login = state => [{
     ...state,
@@ -91,17 +92,29 @@ const LoginForm = ( {state} ) => (
         <label for="password">Password</label>
         <input placeholder="password" onInput={UpdatePassword} value={state.loginData.password} />
       </div>
-      <div class="button-group">
+    </div>
+    <div class="row">
+        <div class="button-group">
           <button onClick={Login} disabled={ (state.loginData.loggedin === "yes" || state.loginData.loggedin === "in_progress") }>
           <span class="icon-user"></span> Login</button>
+        </div>
       </div>
-    </div>
   </div>
 )
 
+
 const Item = ({ id, author, dateAdded, text }) => (
   <div class="card small">
-    <div class="section dark"><small>[{ id }]</small> { author }</div>
+    <div class="section dark">
+      <div class="row">
+        <div class="col-sm-11">
+          <small>[{ id }]</small> { author }
+        </div>
+        <div class="col-sm-1">
+          <span ><img class="closebtn" src={ imgTrash }></img></span>
+        </div>
+      </div>
+    </div>
     <div class="section">{ text }</div>
     <div class="section dark"><small>{ dateAdded.toDate().toLocaleString() } </small></div>
   </div>
@@ -131,15 +144,15 @@ app({
       </div>
 
       <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
         <div class="row">
             {state.items.map( item  => (
               <Item id={item.id} author={item.data.author} dateAdded={item.data.dateAdded} text={item.data.text} />
             ))}
         </div>
         </div>
-        <div class="col-md-2"></div>
+        <div class="col-md-1"></div>
       </div>
     </div>
   </main>

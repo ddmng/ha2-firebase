@@ -1,9 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-import {
-    assign
-} from "/local_modules/fx/src/utils.js"
 
 // Firebase configuration
 var config = {
@@ -48,7 +45,6 @@ export function FirebaseLogin({action, error, username, password}) {
 
 function queryEffect(props, dispatch) {
     db.collection(props.props.collection).onSnapshot(querySnapshot => {
-    //db.collection(props.props.collection).get().then((querySnapshot) => {
         const items = [] 
         querySnapshot.forEach((doc) => {
             items.push({id: doc.id, data: doc.data()} )
