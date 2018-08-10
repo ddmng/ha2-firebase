@@ -22,13 +22,20 @@ const Login = state => [{
   })
 ]
 
-const LoginSuccess = (state) => ({
+const LoginSuccess = (state) => [{
   ...state,
   loginData: {
     ...state.loginData,
-    loggedin: "yes"
+    loggedin: "yes",
+    querying: true
   }
-})
+},
+FirebaseQuery({
+  props: {
+    collection: "items"
+  },
+  action: FillItems
+})]
 
 const LoginError = (state) => ({
   ...state,
@@ -38,17 +45,7 @@ const LoginError = (state) => ({
   }
 })
 
-const Query = state => [{
-    ...state,
-    querying: true
-  },
-  FirebaseQuery({
-    props: {
-      collection: "items"
-    },
-    action: FillItems
-  })
-]
+
 
 const FillItems = (state, items) => ({
   ...state,
@@ -133,9 +130,6 @@ app({
         <div class="col-sm-2"></div>
       </div>
 
-      <div class="row">
-        <button onClick={Query} disabled= { (state.loginData.loggedin !== "yes") || (state.querying === true) }>Query</button>
-      </div>
       <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
