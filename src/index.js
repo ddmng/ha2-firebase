@@ -2,15 +2,6 @@ import {
   app,
   h
 } from "/local_modules/hyperapp/src/index";
-// import hh from "/local_modules/hyperscript-helpers/src/index";
-// const {
-//   main,
-//   input,
-//   button,
-//   div,
-//   h3,
-//   span
-// } = hh(h);
 import {
   FirebaseLogin,
   FirebaseQuery
@@ -90,11 +81,32 @@ const UpdatePassword = (state, {
 });
 
 const LoginForm = ( {state} ) => (
-  <div id="loginform" class={state.loginData.loggedin==="yes"?"hidden":""}>
-    <h3>Welcome to my app</h3>
-    <input placeholder="username" onInput={UpdateUsername} value={state.loginData.username} />
-    <input placeholder="password" onInput={UpdatePassword} value={state.loginData.password} />
-    <button onClick={Login} disabled={ (state.loginData.loggedin === "yes" || state.loginData.loggedin === "in_progress") }>Login</button>
+  <div id="loginform" class={ state.loginData.loggedin==="yes"?"hidden":"row"}>
+    <div class="row">
+      <h3>Welcome to my app</h3>
+    </div>
+    <div class="row">
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input placeholder="username" onInput={UpdateUsername} value={state.loginData.username} />
+      </div>
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input placeholder="password" onInput={UpdatePassword} value={state.loginData.password} />
+      </div>
+      <div class="button-group">
+          <button onClick={Login} disabled={ (state.loginData.loggedin === "yes" || state.loginData.loggedin === "in_progress") }>
+          <span class="icon-user"></span> Login</button>
+      </div>
+    </div>
+  </div>
+)
+
+const Item = ({ id, author, dateAdded, text }) => (
+  <div class="card small">
+    <div class="section dark"><small>[{ id }]</small> { author }</div>
+    <div class="section">{ text }</div>
+    <div class="section dark"><small>{ dateAdded.toDate().toLocaleString() } </small></div>
   </div>
 )
 
@@ -110,13 +122,32 @@ app({
   },
   view: (state) => (
   <main>
-      <LoginForm state={state} />
-      <button onClick={Query} disabled= { (state.loginData.loggedin !== "yes") || (state.querying === true) }>Query</button>
-      <div>
-        {state.items.map( item  => (
-          <li id={ item.id }> { item.data.author } </li>
-        ))}
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+          <div class="row">
+            <LoginForm state={state} />
+          </div>
+        </div>
+        <div class="col-sm-2"></div>
       </div>
+
+      <div class="row">
+        <button onClick={Query} disabled= { (state.loginData.loggedin !== "yes") || (state.querying === true) }>Query</button>
+      </div>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+        <div class="row">
+            {state.items.map( item  => (
+              <Item id={item.id} author={item.data.author} dateAdded={item.data.dateAdded} text={item.data.text} />
+            ))}
+        </div>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+    </div>
   </main>
   ),
   subscribe: console.log,

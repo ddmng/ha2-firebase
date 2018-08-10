@@ -16,6 +16,8 @@ var config = {
 };
 firebase.initializeApp(config);
 const db = firebase.firestore();
+const settings = {/* your settings... */ timestampsInSnapshots: true};
+db.settings(settings);
 
 function loginEffect(props, dispatch) {
     console.log("Logging in with props: ", props)
@@ -45,14 +47,15 @@ export function FirebaseLogin({action, error, username, password}) {
 }
 
 function queryEffect(props, dispatch) {
-    db.collection(props.props.collection).get().then((querySnapshot) => {
+    db.collection(props.props.collection).onSnapshot(querySnapshot => {
+    //db.collection(props.props.collection).get().then((querySnapshot) => {
         const items = [] 
         querySnapshot.forEach((doc) => {
             items.push({id: doc.id, data: doc.data()} )
         });
         dispatch(props.action, items)
-    }).catch(e => {
-        console.error("Error querying resource", e)
+    }, e => {
+         console.error("Error querying resource", e)
     });
 }
 
