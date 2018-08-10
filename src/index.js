@@ -76,6 +76,34 @@ const UpdatePassword = (state, {
   password: value
 });
 
+const LoginForm = (state) => (
+  h('div', {
+    id: "loginform",
+    class: state.loggedin === "yes"?"hidden":"",
+  }, [
+    h('h3', {}, 'Welcome to My App'),
+    h('input', {
+      placeholder: "username",
+      onInput: UpdateUsername,
+      value: state.username
+    }),
+    h('input', {
+      placeholder: "password",
+      onInput: UpdatePassword,
+      value: state.password
+    }),
+    h('button', {
+        onClick: Login,
+        disabled: state.loggedin === "yes" || state.loggedin === "in_progress"
+      },
+      "Login"),
+  ])
+)
+
+const TestForm = () => (
+  h('h1', {}, [])
+)
+
 app({
   init: {
     username: "a@a.com",
@@ -84,37 +112,21 @@ app({
     querying: false,
     items: []
   },
-  view: ({
-      username,
-      password,
-      loggedin,
-      querying,
-      items
-    }) =>
+  view: (state) =>
     h('main', {}, [
-      h('input', {
-        placeholder: "username",
-        onInput: UpdateUsername,
-        value: username
-      }),
-      h('input', {
-        placeholder: "password",
-        onInput: UpdatePassword,
-        value: password
-      }),
-      h('button', {
-          onClick: Login,
-          disabled: loggedin === "yes" || loggedin === "in_progress"
-        },
-        "Login"),
+      LoginForm(state),
+      TestForm(),
+      
       h('button', {
           onClick: Query,
-          disabled: (loggedin !== "yes") || (querying === true)
+          disabled: (state.loggedin !== "yes") || (state.querying === true)
         },
         "Query"),
       h('div', {},
-        items.map(item =>
-          h('li', {id: `li-${item.id}`}, item.data.author)
+        state.items.map(item =>
+          h('li', {
+            id: `li-${item.id}`
+          }, item.data.author)
         )
       )
     ]),

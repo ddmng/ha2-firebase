@@ -1,41 +1,11 @@
-body {
-    color: white;
-    background-color: black;
-    text-align: center;
-    width: 100vw;
-    height: 100vh;
-    border: 0;
-    margin: 0;
-  }
-  
-  input {
-    font-size: 2vw;
-  }
-  
-  button {
-    cursor: pointer;
-    background: transparent;
-    border-radius: 0;
-    border: 0.15vw solid #00caff;
-    color: #00caff;
-    font-size: 4vw;
-    font-weight: 100;
-    margin: 2vw 0 0 2vw;
-    outline: none;
-    padding: 0 3vw;
-    transition: background 0.3s;
-  }
-  
-  button:hover,
-  button:active {
-    background: #00caff;
-    color: #111;
-  }
-  button:active {
-    outline: 0.3vw solid #00caff;
-  }
-  button:disabled {
-    cursor: not-allowed;
-    background: lightgray;
-    color: #111;
-  }
+@import '/node_modules/mini.css/dist/mini-dark.min.css';
+
+
+
+#loginform {
+  display: flex
+}
+#loginform.hidden {
+  display: none
+}
+
