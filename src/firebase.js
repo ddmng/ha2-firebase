@@ -76,5 +76,24 @@ export function DeleteItem(props) {
     db.collection(props.props.collection).doc(props.props.item).delete().then(
         () => dispatch(props.props.action, props.props.item)
     ).catch( error => console.log("Error deleting", props.props.item, error))
+  }
+
+
+export function AddItem(props) {
+    console.log("props: ", props)
+    return {
+        props: props,
+        effect: addItemEffect
+    }
+  }
+  
+  function addItemEffect(props, dispatch) {
+    db.collection(props.props.collection).doc().set({
+        author: props.props.author,
+        text: props.props.text,
+        dateAdded: props.props.dateAdded
+    }).then(
+        () => dispatch(props.props.action, props.props.item)
+    ).catch( error => console.log("Error deleting", props.props.item, error))
     
   }

@@ -4,7 +4,7 @@ import {
 } from "/local_modules/hyperapp/src/index";
 import imgTrash from "../assets/trash-2.svg"
 import {LoginForm} from './login'
-import { DeleteItem } from './firebase'
+import { DeleteItem, AddItem } from './firebase'
 
 const Delete = (id) => (state) => [{
   ...state,
@@ -21,6 +21,33 @@ const ItemDeleted = (id) => (state) => ({
   ...state,
   deleted: id
 })
+
+
+const UpdateNewTodo = (state, {target: {value}}) => ({
+  ...state,
+  newtodo: value
+})
+
+const NewTodo = (state) => [{
+  ...state
+}, 
+AddItem({
+  props: {
+    collection: "items",
+    text: state.newtodo,
+    author: state.loginData.username,
+    dateAdded: new Date(),
+    action: TodoAdded(state.newtodo)
+  }
+}
+)]
+
+const TodoAdded = (text) => (state) => ({
+  ...state,
+  added: text,
+  newtodo: ""
+})
+
 
 const Item = ({ id, author, dateAdded, text }) => (
   <div class="card small">
@@ -63,18 +90,13 @@ const InputForm = ({ state }) => (
         <label for="newtodo">Todo: </label>
         <input placeholder="Add a new todo..." onInput={UpdateNewTodo} value={state.newtodo} />
         <div class="button-group">
-            <button><span class="icon-bookmark"></span> New</button>
+            <button onClick={NewTodo}><span class="icon-bookmark"></span> New</button>
         </div>
       </div>
     </div>
     <div class="col-sm-1"></div>
   </div>
 )
-
-const UpdateNewTodo = (state, {target: {value}}) => ({
-  ...state,
-  newtodo: value
-})
 
 app({
   init: {
