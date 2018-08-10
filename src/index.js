@@ -24,10 +24,8 @@ const Login = state => [{
     }
   },
   FirebaseLogin({
-    props: {
-      username: state.loginData.username,
-      password: state.loginData.password
-    },
+    username: state.loginData.username,
+    password: state.loginData.password,
     action: LoginSuccess,
     error: LoginError
   })

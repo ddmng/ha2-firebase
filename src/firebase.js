@@ -18,7 +18,8 @@ firebase.initializeApp(config);
 const db = firebase.firestore();
 
 function loginEffect(props, dispatch) {
-    firebase.auth().signInWithEmailAndPassword(props.props.username, props.props.password)
+    console.log("Logging in with props: ", props)
+    firebase.auth().signInWithEmailAndPassword(props.username, props.password)
         .then(result => {
             console.log("Authenticated", result)
             dispatch(props.action, result)
@@ -31,10 +32,14 @@ function loginEffect(props, dispatch) {
         });
 }
 
-export function FirebaseLogin(props) {
-    console.log("props: ", props)
+export function FirebaseLogin({action, error, username, password}) {
     return {
-        props: props,
+        props: {
+            action, 
+            error,
+            username,
+            password
+        },
         effect: loginEffect
     }
 }
