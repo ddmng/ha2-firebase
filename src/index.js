@@ -90,7 +90,7 @@ const InputForm = ({ state }) => (
         <label for="newtodo">Todo: </label>
         <input placeholder="Add a new todo..." onInput={UpdateNewTodo} value={state.newtodo} />
         <div class="button-group">
-            <button onClick={NewTodo}><span class="icon-bookmark"></span> New</button>
+            <button class="btn" onClick={NewTodo}><span class="icon-bookmark"></span> New</button>
         </div>
       </div>
     </div>

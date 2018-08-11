@@ -10,3 +10,4 @@ Sample TODO application with HAv2. Todos:
 * functions refactoring
 * styling
 * check if it's the correct way to use HAv2
+* add devtools
