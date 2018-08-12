@@ -75,26 +75,21 @@ const LoadItems = (state, items) => ({
 
 
 const LoginForm = ({ state }) => (
-  state.loginData.loggedin !== "yes" && 
+  state.loginData.loggedin !== "yes" &&
   <div class="container">
-    <div class="container">
-      <div class="columns">
-        <div class="column col-1"></div>
-        <div class="column col-10">
-          <h3>Welcome to my app</h3>
-        </div>
-        <div class="column col-1"></div>
-      </div>
-    </div>
     <div class="columns">
-      <div class="column col-1"></div>
-      <div class="column col-10 form-group">
-        <label class="form-label" for="username">Username</label>
-        <input placeholder="username" onInput={UpdateUsername} value={state.loginData.username} />
-        <label class="form-label" for="password">Password</label>
-        <input placeholder="password" onInput={UpdatePassword} value={state.loginData.password} />
-        <button class="btn" onClick={Login} disabled={(state.loginData.loggedin === "yes" || state.loginData.loggedin === "in_progress")}>
-          <span class="icon-user"></span> Login</button>
+      <div class="column col-12">
+        <div class="form-group">
+          <h3>Welcome to my app</h3>
+
+          <input class="form-input" placeholder="username" onInput={UpdateUsername} value={state.loginData.username} />
+
+          <input class="form-input" placeholder="password" onInput={UpdatePassword} value={state.loginData.password} />
+
+          <button class="btn" onClick={Login} disabled={(state.loginData.loggedin === "yes" || state.loginData.loggedin === "in_progress")}>
+            Login <i class="icon icon-forward"></i></button>
+
+        </div>
       </div>
     </div>
   </div>

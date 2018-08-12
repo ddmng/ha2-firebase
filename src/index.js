@@ -3,7 +3,7 @@ import {
   h
 } from "/local_modules/hyperapp/src/index";
 import imgTrash from "../assets/trash-2.svg"
-import {LoginForm} from './login'
+import { LoginForm } from './login'
 import { DeleteItem, AddItem } from './firebase'
 
 const Delete = (id) => (state) => [{
@@ -23,14 +23,14 @@ const ItemDeleted = (id) => (state) => ({
 })
 
 
-const UpdateNewTodo = (state, {target: {value}}) => ({
+const UpdateNewTodo = (state, { target: { value } }) => ({
   ...state,
   newtodo: value
 })
 
 const NewTodo = (state) => [{
   ...state
-}, 
+},
 AddItem({
   props: {
     collection: "items",
@@ -54,28 +54,28 @@ const Item = ({ id, author, dateAdded, text }) => (
     <div class="section dark">
       <div class="row">
         <div class="col-sm-11">
-          <small>[{ id }]</small> { author }
+          <small>[{id}]</small> {author}
         </div>
         <div class="col-sm-1">
-          <span onClick={ Delete(id) } ><img class="closebtn" src={ imgTrash }></img></span>
+          <span onClick={Delete(id)} ><img class="closebtn" src={imgTrash}></img></span>
         </div>
       </div>
     </div>
-    <div class="section">{ text }</div>
-    <div class="section dark"><small>{ dateAdded.toDate().toLocaleString() } </small></div>
+    <div class="section">{text}</div>
+    <div class="section dark"><small>{dateAdded.toDate().toLocaleString()} </small></div>
   </div>
 )
 
-const ItemsList = ({state}) => (
+const ItemsList = ({ state }) => (
   <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
       <div class="row">
-      {
-        state.items.map( item  => (
-          <Item id={item.id} author={item.data.author} dateAdded={item.data.dateAdded} text={item.data.text} />
-        ))
-      }
+        {
+          state.items.map(item => (
+            <Item id={item.id} author={item.data.author} dateAdded={item.data.dateAdded} text={item.data.text} />
+          ))
+        }
       </div>
     </div>
     <div class="col-md-1"></div>
@@ -90,7 +90,7 @@ const InputForm = ({ state }) => (
         <label for="newtodo">Todo: </label>
         <input placeholder="Add a new todo..." onInput={UpdateNewTodo} value={state.newtodo} />
         <div class="button-group">
-            <button class="btn" onClick={NewTodo}><span class="icon-bookmark"></span> New</button>
+          <button class="btn" onClick={NewTodo}><span class="icon-bookmark"></span> New</button>
         </div>
       </div>
     </div>
@@ -109,23 +109,30 @@ app({
     items: []
   },
   view: (state) => (
-  <main>
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-8">
-          <div class="row">
-            <LoginForm state={state} />
-          </div>
+    <main>
+      <div class="columns">
+        <div class="column col-3 col-xs-1"></div>
+        <div class="column col-6 col-xs-10">
+          <LoginForm state={state} />
         </div>
-        <div class="col-sm-2"></div>
+        <div class="column col-3 col-xs-1"></div>
+      </div>
+      <div class="columns">
+        <div class="column col-3 col-xs-1"></div>
+        <div class="column col-6 col-xs-10">
+        {state.loginData.loggedin === "yes" ? <ItemsList state={state} /> : ""}
+        </div>
+        <div class="column col-3 col-xs-1"></div>
+      </div>
+      <div class="columns">
+        <div class="column col-3 col-xs-1"></div>
+        <div class="column col-6 col-xs-10">
+        {state.loginData.loggedin === "yes" ? <InputForm state={state} /> : ""}
+        </div>
+        <div class="column col-3 col-xs-1"></div>
       </div>
 
-      { state.loginData.loggedin==="yes"?<ItemsList state={state} />:"" }
-      { state.loginData.loggedin==="yes"?<InputForm state={state} />:"" }
-    </div>
-
-  </main>
+    </main>
   ),
   subscribe: console.log,
   container: document.querySelector("#app")
