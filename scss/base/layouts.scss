@@ -13,7 +13,6 @@ Layout Styles
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
-  max-width: 1170px;
 }
 
 /* Row */
@@ -37,9 +36,34 @@ Layout Styles
   justify-content: space-around;
 }
 
+.newitem,
+.itemslist,
 .centered {
   @include flexbox-display();
   flex-flow: column wrap;
   align-items: center;
 }
 
+.item-row {
+  min-width: 400px;
+  max-width: 800px;
+  border: 1px;
+  border-color: $color1;
+  margin-top: 16px;
+}
+
+.item-data {
+  @include flexbox-display();
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.item-title {
+  font-size: 1.0em;
+  font-weight: bold;
+}
+
+.item-metadata {
+  font-size: 0.75em;
+  font-style: italic;
+}

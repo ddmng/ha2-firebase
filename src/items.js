@@ -47,26 +47,26 @@ const TodoAdded = (text) => (state) => ({
 
 
 const Item = ({ id, author, dateAdded, text }) => (
-    <div class="container">
-        <div class="row">
-            <h5>{text}</h5>
-            {dateAdded.toDate().toLocaleString()}
-            {author}
-            <button onClick={Delete(id)} class="btn btn-delete"><i class="fa fa-trash-alt"></i></button>
-        </div>
-    </div>
-
+            <div class="item-data">
+                <div>
+                    <div class="item-title">{text}</div>
+                    <div class="item-metadata">
+                        {author}, <small>{dateAdded.toDate().toLocaleDateString()}</small>
+                    </div>
+                </div>
+                <button onClick={Delete(id)} class="btn btn-delete"><i class="fa fa-trash-alt"></i></button>
+            </div>
 )
 
 export const ItemsList = ({ state }) => (
     <div class="container">
-        <div class="row">
             {
                 state.items.map(item => (
+                    <div class="row item-row">
                     <Item id={item.id} author={item.data.author} dateAdded={item.data.dateAdded} text={item.data.text} />
+                    </div>
                 ))
             }
-        </div>
     </div>
 )
 

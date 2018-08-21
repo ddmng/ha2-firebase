@@ -2,20 +2,19 @@
 Header
 ***************************/
 
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+}
+
 header {
+    background: $header-color;
+    position: relative;
+    width: 100%;
     margin-bottom: 20px;
-    .container {
-        margin-right: -($gutter-margin);
-        margin-left: -($gutter-margin);
-    }
 }
-
-.header-primary {
-    text-align: center;
-    padding-top: 18px;
-    padding-bottom: 18px;
-    .container {
-        @include flexbox-display();
-    }
-}
-
