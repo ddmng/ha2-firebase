@@ -80,7 +80,7 @@ const LoginForm = ({ state }) => (
       <div class="row centered">
         <h3>Lista della spesa</h3>
 
-        <input class="form-input" placeholder="username" onInput={UpdateUsername} value={state.loginData.username} />
+        <input class="form-input" autofocus placeholder="username" onInput={UpdateUsername} value={state.loginData.username} />
 
         <input class="form-input" type="password" placeholder="password" onInput={UpdatePassword} value={state.loginData.password} />
 

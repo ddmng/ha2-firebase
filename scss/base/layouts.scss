@@ -43,9 +43,3 @@ Layout Styles
   align-items: center;
 }
 
-.btn-login {
-  width: 100%;
-  @include flexbox-display();
-  flex-flow: row wrap;
-  justify-content: flex-end;
-}

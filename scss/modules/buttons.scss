@@ -1,40 +1,53 @@
-
 /***************************
 Button Modules
 ***************************/
+
 .btn {
-    display: inline-block;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    background-image: none;
-    border: 1px solid transparent;
-    cursor: pointer;
-    padding: 12px 30px;
-    font-size: 1.313em;
-    font-weight: bold;
-    border-radius: 1px;
-    text-decoration: none;
-    transition: all 0.3s ease 0s;
-  }
-  .btn-primary {
-    background-color: $color3;
-    color: $text-color;
-    border-color: $color2;
-  }
-  .btn-primary:hover {
-    background-color: lighten( $color3, 5% );
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-image: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  padding: 12px 30px;
+  font-size: 1.313em;
+  font-weight: bold;
+  border-radius: 1px;
+  text-decoration: none;
+  transition: all 0.3s ease 0s;
+}
+
+.btn-primary {
+  background-color: $color3;
+  color: $text-color;
+  border-color: $color2;
+  &:hover {
+    background-color: lighten( $color3, 5%);
     border-color: white;
     text-decoration: none;
   }
-  .btn-delete {
-    background-color: $color4;
-    color: $warning-color;
-    border-color: $color2;
+  &[disabled],
+  &:disabled {
+    background: $disabled-background-color;
+    color: $disabled-text-color;
   }
-  .btn-delete:hover {
-    background-color: lighten( $color4, 5% );
+}
+
+.btn-delete {
+  background-color: $color4;
+  color: $warning-color;
+  border-color: $color2;
+  &:hover {
+    background-color: lighten( $color4, 5%);
     border-color: $warning-color;
     text-decoration: none;
   }
-  
+}
+
+.btn-login {
+  width: 100%;
+  @include flexbox-display();
+  flex-flow: row wrap;
+  justify-content: flex-end;
+}

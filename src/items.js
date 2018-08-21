@@ -24,7 +24,8 @@ const UpdateNewTodo = (state, { target: { value } }) => ({
 })
 
 const NewTodo = (state) => [{
-    ...state
+    ...state,
+    adding: true
 },
 AddItem({
     props: {
@@ -40,7 +41,8 @@ AddItem({
 const TodoAdded = (text) => (state) => ({
     ...state,
     added: text,
-    newtodo: ""
+    newtodo: "",
+    adding: false
 })
 
 
@@ -70,10 +72,19 @@ export const ItemsList = ({ state }) => (
 
 export const InputForm = ({ state }) => (
     <div class="container">
+        <form onSubmit={NewTodo} >
         <div class="row">
             <label class="input-label" for="newtodo">Todo: </label>
-            <input class="form-input" placeholder="Add a new todo..." onInput={UpdateNewTodo} value={state.newtodo} />
-            <button class="btn btn-primary" onClick={NewTodo}><i class="fa fa-plus"></i></button>
+            <input class="form-input" 
+                id="todoitem"
+                placeholder="Add a new todo..."
+                onInput={UpdateNewTodo} 
+                value={state.newtodo}
+                disabled={state.adding} />
+            <button class="btn btn-primary"
+                onClick={NewTodo}
+                disabled={state.adding}><i class="fa fa-plus"></i></button>
         </div>
+        </form>
     </div>
 )
