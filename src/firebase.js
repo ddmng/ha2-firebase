@@ -13,7 +13,9 @@ var config = {
 };
 firebase.initializeApp(config);
 const db = firebase.firestore();
-const settings = {/* your settings... */ timestampsInSnapshots: true};
+const settings = { /* your settings... */
+    timestampsInSnapshots: true
+};
 db.settings(settings);
 
 function loginEffect(props, dispatch) {
@@ -21,6 +23,7 @@ function loginEffect(props, dispatch) {
     firebase.auth().signInWithEmailAndPassword(props.username, props.password)
         .then(result => {
             console.log("Authenticated", result)
+            localStorage.setItem('loggedinUser', props.username)
             dispatch(props.action, result)
         }).catch((error) => {
             var errorCode = error.code;
@@ -31,10 +34,15 @@ function loginEffect(props, dispatch) {
         });
 }
 
-export function FirebaseLogin({action, error, username, password}) {
+export function FirebaseLogin({
+    action,
+    error,
+    username,
+    password
+}) {
     return {
         props: {
-            action, 
+            action,
             error,
             username,
             password
@@ -45,13 +53,16 @@ export function FirebaseLogin({action, error, username, password}) {
 
 function queryEffect(props, dispatch) {
     db.collection(props.props.collection).onSnapshot(querySnapshot => {
-        const items = [] 
+        const items = []
         querySnapshot.forEach((doc) => {
-            items.push({id: doc.id, data: doc.data()} )
+            items.push({
+                id: doc.id,
+                data: doc.data()
+            })
         });
         dispatch(props.action, items)
     }, e => {
-         console.error("Error querying resource", e)
+        console.error("Error querying resource", e)
     });
 }
 
@@ -70,13 +81,13 @@ export function DeleteItem(props) {
         props: props,
         effect: deleteItemEffect
     }
-  }
-  
-  function deleteItemEffect(props, dispatch) {
+}
+
+function deleteItemEffect(props, dispatch) {
     db.collection(props.props.collection).doc(props.props.item).delete().then(
         () => dispatch(props.props.action, props.props.item)
-    ).catch( error => console.log("Error deleting", props.props.item, error))
-  }
+    ).catch(error => console.log("Error deleting", props.props.item, error))
+}
 
 
 export function AddItem(props) {
@@ -85,15 +96,15 @@ export function AddItem(props) {
         props: props,
         effect: addItemEffect
     }
-  }
-  
-  function addItemEffect(props, dispatch) {
+}
+
+function addItemEffect(props, dispatch) {
     db.collection(props.props.collection).doc().set({
         author: props.props.author,
         text: props.props.text,
         dateAdded: props.props.dateAdded
     }).then(
         () => dispatch(props.props.action, props.props.item)
-    ).catch( error => console.log("Error deleting", props.props.item, error))
-    
-  }
+    ).catch(error => console.log("Error deleting", props.props.item, error))
+
+}

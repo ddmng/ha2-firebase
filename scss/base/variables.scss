@@ -1,16 +1,15 @@
 
 // Adobe color wheel theme: https://color.adobe.com/Color-Theme-53-color-theme-11078662/edit/?copy=true&base=2&rule=Custom&selected=4&name=Copy%20of%20Color%20Theme%2053&mode=rgb&rgbvalues=0.09411764889955522,0.11372549086810942,0.22745098173618317,0.125490203499794,0.25882354378700256,0.3764705955982208,1,0.7176470756531187,0.4000000059604645,1,0.6352941393852932,0.21568627655506134,0.9215686321258545,0.23921568691732978,0&swatchOrder=0,1,2,3,4
-$color1: #043b40;
-$color2: #276a73;
-$color3: #20a69a;
-$color4: #a1beb4;
-$color5: #f1e2cb;
+$color1: #495867;
+$color2: #577399;
+$color3: #BDD5EA;
+$color4: #FE5F55;
+$color5: #F7F7FF;
 
 $text-color: $color1 !default;
 $link-color: $color3 !default;
-$header-color: $color3 !default;
-$background-color: $color4 !default;
+$header-color: $color1 !default;
+$background-color: $color3 !default;
 
-$warning-color: #dd2222;
 $disabled-background-color: #bbbbbb;
 $disabled-text-color: #555555;

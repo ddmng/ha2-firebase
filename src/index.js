@@ -7,8 +7,9 @@ import { LoginForm } from './login'
 import { InputForm, ItemsList } from './items'
 import { Header } from './header'
 
-app({
-  init: {
+
+const InitApp = () => (
+  {
     loginData: {
       username: "a@a.com",
       password: "123456",
@@ -16,7 +17,11 @@ app({
     },
     querying: false,
     items: []
-  },
+  }
+)
+
+app({
+  init: InitApp,
   view: (state) => (
     <main>
       <header>

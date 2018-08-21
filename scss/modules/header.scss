@@ -4,10 +4,13 @@ Header
 
 header {
     margin-bottom: 20px;
+    .container {
+        margin-right: -($gutter-margin);
+        margin-left: -($gutter-margin);
+    }
 }
 
 .header-primary {
-    background: $header-color;
     text-align: center;
     padding-top: 18px;
     padding-bottom: 18px;
