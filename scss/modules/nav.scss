@@ -1,0 +1,19 @@
+/***************************
+Nav Modules
+***************************/
+
+.nav>ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.nav-primary {
+    display: flex;
+    flex-flow: row;
+    margin-top: 0px;
+    justify-content: space-between;
+    li {
+        display: inline-block;
+    }
+}

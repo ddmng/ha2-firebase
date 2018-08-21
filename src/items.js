@@ -45,29 +45,35 @@ const TodoAdded = (text) => (state) => ({
 
 
 const Item = ({ id, author, dateAdded, text }) => (
-    <div class="row">
+    <div class="container">
+        <div class="row">
             <h5>{text}</h5>
             {dateAdded.toDate().toLocaleString()}
             {author}
             <button onClick={Delete(id)} class="btn btn-delete"><i class="fa fa-trash-alt"></i></button>
+        </div>
     </div>
 
 )
 
 export const ItemsList = ({ state }) => (
-    <div class="row">
+    <div class="container">
+        <div class="row">
             {
                 state.items.map(item => (
                     <Item id={item.id} author={item.data.author} dateAdded={item.data.dateAdded} text={item.data.text} />
                 ))
             }
+        </div>
     </div>
 )
 
 export const InputForm = ({ state }) => (
-    <div class="row">
-        <label class="input-label" for="newtodo">Todo: </label>
-        <input class="form-input" placeholder="Add a new todo..." onInput={UpdateNewTodo} value={state.newtodo} />
-        <button class="btn btn-primary" onClick={NewTodo}><span class="icon-bookmark"></span> New</button>
+    <div class="container">
+        <div class="row">
+            <label class="input-label" for="newtodo">Todo: </label>
+            <input class="form-input" placeholder="Add a new todo..." onInput={UpdateNewTodo} value={state.newtodo} />
+            <button class="btn btn-primary" onClick={NewTodo}><i class="fa fa-plus"></i></button>
+        </div>
     </div>
 )

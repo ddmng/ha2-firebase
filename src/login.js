@@ -76,14 +76,20 @@ const LoadItems = (state, items) => ({
 
 const LoginForm = ({ state }) => (
   <div class="container">
-    <h3>Welcome to my app</h3>
+    <form onSubmit={Login}>
+      <div class="row centered">
+        <h3>Lista della spesa</h3>
 
-    <input class="form-input" placeholder="username" onInput={UpdateUsername} value={state.loginData.username} />
+        <input class="form-input" placeholder="username" onInput={UpdateUsername} value={state.loginData.username} />
 
-    <input class="form-input" placeholder="password" onInput={UpdatePassword} value={state.loginData.password} />
+        <input class="form-input" type="password" placeholder="password" onInput={UpdatePassword} value={state.loginData.password} />
 
-    <button class="btn btn-primary" onClick={Login} disabled={(state.loginData.loggedin === "in_progress")}>
-      Login <i class="icon icon-forward"></i></button>
+        <div class="btn-login">
+          <button class="btn btn-primary" type="submit" disabled={(state.loginData.loggedin === "in_progress")}>
+            <i class="fas fa-sign-in-alt"></i></button>
+        </div>
+      </div>
+    </form>
   </div>
 )
 

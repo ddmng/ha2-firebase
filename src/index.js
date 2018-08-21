@@ -20,7 +20,7 @@ app({
   view: (state) => (
     <main>
       <header>
-        <Header state={state} />
+        {state.loginData.loggedin === "yes" ? <Header state={state} /> : "" }
       </header>
 
       <section class="login">

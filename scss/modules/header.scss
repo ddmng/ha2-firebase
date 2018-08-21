@@ -2,9 +2,17 @@
 Header
 ***************************/
 
+header {
+    margin-bottom: 20px;
+}
+
 .header-primary {
     background: $header-color;
     text-align: center;
     padding-top: 18px;
     padding-bottom: 18px;
+    .container {
+        @include flexbox-display();
+    }
 }
+

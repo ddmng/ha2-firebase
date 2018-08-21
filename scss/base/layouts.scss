@@ -1,0 +1,51 @@
+$gutter: 30px;
+$gutter-margin: ($gutter / 2);
+/***************************
+****************************
+Layout Styles
+****************************
+***************************/
+
+/* Content Container*/
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1170px;
+}
+
+/* Row */
+
+.row {
+  margin-right: -($gutter-margin);
+  margin-left: -($gutter-margin);
+}
+
+/* Row Clear Float*/
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.login {
+  @include flexbox-display();
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.centered {
+  @include flexbox-display();
+  flex-flow: column wrap;
+  align-items: center;
+}
+
+.btn-login {
+  width: 100%;
+  @include flexbox-display();
+  flex-flow: row wrap;
+  justify-content: flex-end;
+}
