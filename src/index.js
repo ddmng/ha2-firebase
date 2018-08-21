@@ -1,11 +1,11 @@
+import '/scss/style.scss'
 import {
   app,
   h
 } from "/local_modules/hyperapp/src/index";
-import imgTrash from "../assets/trash-2.svg"
 import { LoginForm } from './login'
-import { DeleteItem, AddItem } from './firebase'
-import { ItemsManagement } from './items'
+import { InputForm, ItemsList } from './items'
+import { Header } from './header'
 
 app({
   init: {
@@ -19,18 +19,29 @@ app({
   },
   view: (state) => (
     <main>
-      <div class="columns">
-        <div class="column col-3 col-xs-1"></div>
-        <div class="column col-6 col-xs-10">
-          <LoginForm state={state} />
-        </div>
-        <div class="column col-3 col-xs-1"></div>
-      </div>
-        <ItemsManagement state={state}/>
+      <header>
+        <Header state={state} />
+      </header>
+
+      <section class="login">
+        {state.loginData.loggedin === "no" ? <LoginForm state={state} /> : ""}
+      </section>
+
+      <section class="newitem">
+        {state.loginData.loggedin === "yes" ? <InputForm state={state} /> : ""}
+      </section>
+
+      <section class="itemslist">
+        {state.loginData.loggedin === "yes" ? <ItemsList state={state} /> : ""}
+      </section>
+
+      <footer>
+
+      </footer>
     </main>
   ),
   subscribe: console.log,
-  container: document.querySelector("#app")
+  container: document.querySelector("body")
 });
 
 console.clear();

@@ -1,0 +1,27 @@
+
+/***************************
+Button Modules
+***************************/
+.form-input {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+    background-image: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    padding: 10px 10px;
+    font-size: 1.313em;
+    border-radius: 0px;
+    text-decoration: none;
+    transition: all 0.3s ease 0s;
+    background-color: $color5;
+    color: $text-color;
+    border-color: $color2;
+  }
+  .form-input:focus {
+    background-color: lighten( $color5, 5% );
+  }
+  .form-input:hover {
+    background-color: lighten( $color5, 5% );
+    border-color: white;
+  }

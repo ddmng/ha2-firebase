@@ -44,67 +44,30 @@ const TodoAdded = (text) => (state) => ({
 })
 
 
-export const ItemsManagement = ({ state }) => (
-    <div class="container">
-        <div class="columns">
-            <div class="column col-3 col-xs-1"></div>
-            <div class="column col-6 col-xs-10">
-                {state.loginData.loggedin === "yes" ? <ItemsList state={state} /> : ""}
-            </div>
-            <div class="column col-3 col-xs-1"></div>
-        </div>
-        <div class="columns">
-            <div class="column col-3 col-xs-1"></div>
-            <div class="column col-6 col-xs-10">
-                {state.loginData.loggedin === "yes" ? <InputForm state={state} /> : ""}
-            </div>
-            <div class="column col-3 col-xs-1"></div>
-        </div>
-    </div>
-)
-
 const Item = ({ id, author, dateAdded, text }) => (
-
-    <div class="card">
-        <div class="card-header">
-            <div class="card-title h5">{text}</div>
-            <div class="card-subtitle text-gray">
-                <small>{dateAdded.toDate().toLocaleString()}</small>
-                <div class="chip">{author}</div>
-            </div>
-        </div>
-        <div class="card-footer">
-            <button onClick={Delete(id)} class="btn btn-primary"><i class="icon icon-check"></i></button>
-            <button onClick={Delete(id)} class="btn btn-primary"><i class="icon icon-cross"></i></button>
-        </div>
+    <div class="row">
+            <h5>{text}</h5>
+            {dateAdded.toDate().toLocaleString()}
+            {author}
+            <button onClick={Delete(id)} class="btn btn-delete"><i class="fa fa-trash-alt"></i></button>
     </div>
 
 )
 
-const ItemsList = ({ state }) => (
-    <div class="columns">
-        <div class="col-12">
+export const ItemsList = ({ state }) => (
+    <div class="row">
             {
                 state.items.map(item => (
                     <Item id={item.id} author={item.data.author} dateAdded={item.data.dateAdded} text={item.data.text} />
                 ))
             }
-        </div>
     </div>
 )
 
-const InputForm = ({ state }) => (
+export const InputForm = ({ state }) => (
     <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-10">
-            <div class="input-group">
-                <label for="newtodo">Todo: </label>
-                <input placeholder="Add a new todo..." onInput={UpdateNewTodo} value={state.newtodo} />
-                <div class="button-group">
-                    <button class="btn" onClick={NewTodo}><span class="icon-bookmark"></span> New</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-1"></div>
+        <label class="input-label" for="newtodo">Todo: </label>
+        <input class="form-input" placeholder="Add a new todo..." onInput={UpdateNewTodo} value={state.newtodo} />
+        <button class="btn btn-primary" onClick={NewTodo}><span class="icon-bookmark"></span> New</button>
     </div>
 )
