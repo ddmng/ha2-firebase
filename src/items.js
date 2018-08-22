@@ -22,11 +22,6 @@ const UpdateNewTodo = (state, { target: { value } }) => ({
     newtodo: value
 })
 
-const UpdateWriting = (username) => (state) => ({
-    ...state,
-    writing: username
-})
-
 const NewTodo = (state) => [{
     ...state,
     adding: true
