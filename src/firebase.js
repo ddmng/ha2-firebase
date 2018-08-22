@@ -96,9 +96,11 @@ function queryEffect(props, dispatch) {
 
     db.collection(itemsCollection).onSnapshot(querySnapshot => {
         const items = []
-        console.log("Received update from firebase!")
+        console.log("Received update from firebase!", querySnapshot)
 
-        querySnapshot.forEach((doc) => {
+        querySnapshot.docs
+        .sort((a,b) => (a.data().dateAdded > b.data().dateAdded))
+        .forEach((doc) => {
             items.push({
                 id: doc.id,
                 data: doc.data()
