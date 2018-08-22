@@ -50,32 +50,16 @@ function loginEffect(props, dispatch) {
         });
 
     }
-    // firebase.auth().signInWithEmailAndPassword(props.username, props.password)
-    //     .then(result => {
-    //         console.log("Authenticated", result)
-    //         localStorage.setItem('loggedinUser', props.username)
-    //         dispatch(props.action, result)
-    //     }).catch((error) => {
-    //         var errorCode = error.code;
-    //         var errorMessage = error.message;
-    //         console.error("Login error", errorCode, errorMessage)
-
-    //         dispatch(props.error, error)
-    //     });
 }
 
 export function FirebaseLogin({
     action,
     error,
-    username,
-    password
 }) {
     return {
         props: {
             action,
             error,
-            username,
-            password
         },
         effect: loginEffect
     }

@@ -70,7 +70,6 @@ const LoadItems = (state, items) => ({
   items: items
 })
 
-
 export const LoginForm = ({ state }) => (
   <div class="container">
     <div class="container">
