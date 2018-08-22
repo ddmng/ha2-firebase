@@ -3,7 +3,32 @@ import { h } from "/local_modules/hyperapp/src/index";
 import {
   FirebaseLogin,
   FirebaseQuery,
+  FirebaseLogout,
 } from './firebase';
+
+export const Logout = state => [(
+  {
+    loginData: {
+      username: "a@a.com",
+      password: "123456",
+      loggedin: "yes"
+    },
+    querying: true,
+    items: []
+  }
+),
+FirebaseLogout({
+  action: LogoutSuccess
+})]
+
+
+const LogoutSuccess = (state) => ({
+  ...state,
+  loginData: {
+    ...state.loginData,
+    loggedin: "no",
+  }
+})
 
 export const Login = state => [(
   {

@@ -25,26 +25,22 @@ function loginEffect(props, dispatch) {
 
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider).then(function (result) {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        var token = result.credential.accessToken;
-        // The signed-in user info.
-        var user = result.user;
         console.log("Auth: ", result.user.email)
-        dispatch(props.action, {username: result.user.email})
+        localStorage.setItem('email', result.user.email);
+        localStorage.setItem('token', result.credential.accessToken);
+        dispatch(props.action, {
+            username: result.user.email
+        })
     }).catch(function (error) {
-        // Handle Errors here.
-        var errorCode = error.code;
         var errorMessage = error.message;
         // The email of the user's account used.
         var email = error.email;
         // The firebase.auth.AuthCredential type that was used.
         var credential = error.credential;
-        // ...
-        console.error(errorMessage)
+
+        console.error("Error in auth: ", errorMessage)
         dispatch(props.error, error)
     });
-
-
 
     // firebase.auth().signInWithEmailAndPassword(props.username, props.password)
     //     .then(result => {
@@ -76,6 +72,33 @@ export function FirebaseLogin({
         effect: loginEffect
     }
 }
+
+
+function logoutEffect(props, dispatch) {
+    console.log("Logging out")
+
+    firebase.auth().signOut().then(function () {
+        // Sign-out successful.
+        localStorage.removeItem('email');
+        localStorage.removeItem('token');
+
+        dispatch(props.action, {})
+    }).catch(function (error) {
+        // An error happened.
+    });
+}
+
+export function FirebaseLogout({
+    action
+}) {
+    return {
+        props: {
+            action
+        },
+        effect: logoutEffect
+    }
+}
+
 
 function queryEffect(props, dispatch) {
 
