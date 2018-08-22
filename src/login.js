@@ -5,16 +5,17 @@ import {
   FirebaseQuery,
 } from './firebase';
 
-const Login = state => [{
-  ...state,
-  loginData: {
-    ...state.loginData,
-    loggedin: "in_progress"
-  }
-},
+export const Login = state => [(
+  {
+    loginData: {
+      username: "a@a.com",
+      password: "123456",
+      loggedin: "in_progress"
+    },
+    querying: false,
+    items: []
+  }),
 FirebaseLogin({
-  username: state.loginData.username,
-  password: state.loginData.password,
   action: LoginSuccess,
   error: LoginError,
 })
@@ -79,7 +80,7 @@ export const LoginForm = ({ state }) => (
   <div class="container">
     <div class="container">
       <div class="row">
-      <button class="btn btn-primary" onClick={Login}>Login</button>
+        {state.loginData.loggedin == "in_progress" ? <h2>Login in progress...</h2> : <button class="btn btn-primary" onClick={Login}>Login</button> }
       </div>
     </div>
   </div>

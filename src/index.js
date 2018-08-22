@@ -3,25 +3,13 @@ import {
   app,
   h
 } from "/local_modules/hyperapp/src/index";
-import { LoginForm } from './login'
+import { LoginForm, Login } from './login'
 import { InputForm, ItemsList } from './items'
 import { Header } from './header'
 
 
-const InitApp = () => (
-  {
-    loginData: {
-      username: "a@a.com",
-      password: "123456",
-      loggedin: "no",
-    },
-    querying: false,
-    items: []
-  }
-)
-
 app({
-  init: InitApp,
+  init: Login,
   view: (state) => (
     <main>
       <header>
@@ -29,7 +17,7 @@ app({
       </header>
 
       <section class="login">
-        {state.loginData.loggedin === "no" ? <LoginForm state={state} /> : ""}
+        {state.loginData.loggedin !== "yes" ? <LoginForm state={state} /> : ""}
       </section>
 
       <section class="newitem">
