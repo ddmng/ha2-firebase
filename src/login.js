@@ -8,13 +8,8 @@ import {
 
 export const Logout = state => [(
   {
-    loginData: {
-      username: "a@a.com",
-      password: "123456",
-      loggedin: "yes"
-    },
-    querying: true,
-    items: []
+    ...state,
+    querying: true
   }
 ),
 FirebaseLogout({
@@ -33,8 +28,7 @@ const LogoutSuccess = (state) => ({
 export const Login = state => [(
   {
     loginData: {
-      username: "a@a.com",
-      password: "123456",
+      username: "",
       loggedin: "in_progress"
     },
     querying: false,
@@ -70,30 +64,6 @@ const LoginError = (state) => ({
   }
 })
 
-const UpdateUsername = (state, {
-  target: {
-    value
-  }
-}) => ({
-  ...state,
-  loginData: {
-    ...state.loginData,
-    username: value
-  }
-});
-
-const UpdatePassword = (state, {
-  target: {
-    value
-  }
-}) => ({
-  ...state,
-  loginData: {
-    ...state.loginData,
-    password: value
-  }
-});
-
 const LoadItems = (state, items) => ({
   ...state,
   querying: false,
@@ -105,7 +75,7 @@ export const LoginForm = ({ state }) => (
   <div class="container">
     <div class="container">
       <div class="row">
-        {state.loginData.loggedin == "in_progress" ? <h2>Login in progress...</h2> : <button class="btn btn-primary" onClick={Login}>Login</button> }
+        {state.loginData.loggedin == "in_progress" ? <h1><i class="fa fa-spinner fa-spin"></i></h1> : <button class="btn btn-primary" onClick={Login}><i class="fa fa-sign-in-alt"></i></button> }
       </div>
     </div>
   </div>
