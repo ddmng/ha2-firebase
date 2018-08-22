@@ -70,19 +70,20 @@ export const ItemsList = ({ state }) => (
 
 export const InputForm = ({ state }) => (
     <div class="container">
-        <form onSubmit={state.newtodo ? NewTodo : state} >
+        
         <div class="row">
             <input class="form-input" 
                 id="todoitem"
                 placeholder="Cosa dobbiamo comprare?"
-                onInput={UpdateNewTodo} 
+                onInput={UpdateNewTodo}
                 value={state.newtodo}
+                onKeyup={(e) => (e.keyCode == 13 ? NewTodo : state) }
                 disabled={state.adding} />
             <button class="btn btn-primary"
-                type="submit"
+                onClick={NewTodo}
                 disabled={state.adding || !state.newtodo || state.newtodo.length === 0}><i class="fa fa-plus"></i></button>
         </div>
-        </form>
+        
         {/* { state.writing ? <small>{state.writing} is writing</small> : "" } */}
     </div>
 )
