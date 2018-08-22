@@ -23,25 +23,33 @@ const statusCollection = "status";
 function loginEffect(props, dispatch) {
     console.log("Logging in with props: ", props)
 
-    var provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider).then(function (result) {
-        console.log("Auth: ", result.user.email)
-        localStorage.setItem('email', result.user.email);
-        localStorage.setItem('token', result.credential.accessToken);
+    let savedEmail = localStorage.getItem('email')
+    if (savedEmail) {
         dispatch(props.action, {
-            username: result.user.email
+            username: savedEmail
         })
-    }).catch(function (error) {
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
+    } else {
 
-        console.error("Error in auth: ", errorMessage)
-        dispatch(props.error, error)
-    });
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function (result) {
+            console.log("Auth: ", result.user.email)
+            localStorage.setItem('email', result.user.email);
+            localStorage.setItem('token', result.credential.accessToken);
+            dispatch(props.action, {
+                username: result.user.email
+            })
+        }).catch(function (error) {
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
 
+            console.error("Error in auth: ", errorMessage)
+            dispatch(props.error, error)
+        });
+
+    }
     // firebase.auth().signInWithEmailAndPassword(props.username, props.password)
     //     .then(result => {
     //         console.log("Authenticated", result)
