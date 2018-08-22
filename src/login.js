@@ -20,10 +20,11 @@ FirebaseLogin({
 })
 ]
 
-const LoginSuccess = (state) => [{
+const LoginSuccess = (state, {username}) => [{
   ...state,
   loginData: {
     ...state.loginData,
+    username: username,
     loggedin: "yes",
     querying: true
   }
@@ -76,26 +77,9 @@ const LoadItems = (state, items) => ({
 
 export const LoginForm = ({ state }) => (
   <div class="container">
-    <form onSubmit={Login}>
-      <div class="row centered">
-        <h3>Lista della spesa</h3>
-
-        <input class="form-input" autofocus placeholder="username" onInput={UpdateUsername} value={state.loginData.username} />
-
-        <input class="form-input" type="password" placeholder="password" onInput={UpdatePassword} value={state.loginData.password} />
-
-        <div class="btn-login">
-          <button class="btn btn-primary" type="submit" disabled={(state.loginData.loggedin === "in_progress")}>
-            <i class="fas fa-sign-in-alt"></i></button>
-        </div>
-      </div>
-    </form>
-
     <div class="container">
       <div class="row">
-      <button class="btn btn-primary">
-      Login con Google
-      </button>
+      <button class="btn btn-primary" onClick={Login}>Login</button>
       </div>
     </div>
   </div>

@@ -20,21 +20,44 @@ db.settings(settings);
 const itemsCollection = "items";
 const statusCollection = "status";
 
-
 function loginEffect(props, dispatch) {
     console.log("Logging in with props: ", props)
-    firebase.auth().signInWithEmailAndPassword(props.username, props.password)
-        .then(result => {
-            console.log("Authenticated", result)
-            localStorage.setItem('loggedinUser', props.username)
-            dispatch(props.action, result)
-        }).catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            console.error("Login error", errorCode, errorMessage)
 
-            dispatch(props.error, error)
-        });
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider).then(function (result) {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = result.credential.accessToken;
+        // The signed-in user info.
+        var user = result.user;
+        console.log("Auth: ", result.user.email)
+        dispatch(props.action, {username: result.user.email})
+    }).catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+        console.error(errorMessage)
+        dispatch(props.error, error)
+    });
+
+
+
+    // firebase.auth().signInWithEmailAndPassword(props.username, props.password)
+    //     .then(result => {
+    //         console.log("Authenticated", result)
+    //         localStorage.setItem('loggedinUser', props.username)
+    //         dispatch(props.action, result)
+    //     }).catch((error) => {
+    //         var errorCode = error.code;
+    //         var errorMessage = error.message;
+    //         console.error("Login error", errorCode, errorMessage)
+
+    //         dispatch(props.error, error)
+    //     });
 }
 
 export function FirebaseLogin({
@@ -55,7 +78,7 @@ export function FirebaseLogin({
 }
 
 function queryEffect(props, dispatch) {
- 
+
     db.collection(itemsCollection).onSnapshot(querySnapshot => {
         const items = []
         console.log("Received update from firebase!")
@@ -79,7 +102,7 @@ export function FirebaseQuery(props) {
         props: props,
         effect: (props, dispatch) => {
             queryEffect(props, dispatch)
-        } 
+        }
     }
 }
 
