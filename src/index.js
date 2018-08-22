@@ -45,7 +45,7 @@ app({
       </footer>
     </main>
   ),
-  subscribe: console.log,
+  subscribe: (s) => console.log("STATE: ", s),
   container: document.querySelector("body")
 });
 

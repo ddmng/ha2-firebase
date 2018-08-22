@@ -1,12 +1,11 @@
 import { h } from "/local_modules/hyperapp/src/index";
-import { DeleteItem, AddItem } from './firebase'
+import { DeleteItem, AddItem, UpdateStatus } from './firebase'
 
 const Delete = (id) => (state) => [{
     ...state,
 },
 DeleteItem({
     props: {
-        collection: "items",
         item: id,
         action: ItemDeleted(id)
     }
@@ -23,13 +22,17 @@ const UpdateNewTodo = (state, { target: { value } }) => ({
     newtodo: value
 })
 
+const UpdateWriting = (username) => (state) => ({
+    ...state,
+    writing: username
+})
+
 const NewTodo = (state) => [{
     ...state,
     adding: true
 },
 AddItem({
     props: {
-        collection: "items",
         text: state.newtodo,
         author: state.loginData.username,
         dateAdded: new Date(),
@@ -74,17 +77,17 @@ export const InputForm = ({ state }) => (
     <div class="container">
         <form onSubmit={NewTodo} >
         <div class="row">
-            <label class="input-label" for="newtodo">Todo: </label>
             <input class="form-input" 
                 id="todoitem"
-                placeholder="Add a new todo..."
+                placeholder="Cosa dobbiamo comprare?"
                 onInput={UpdateNewTodo} 
                 value={state.newtodo}
                 disabled={state.adding} />
             <button class="btn btn-primary"
-                onClick={NewTodo}
+                type="submit"
                 disabled={state.adding}><i class="fa fa-plus"></i></button>
         </div>
         </form>
+        { state.writing ? <small>{state.writing} is writing</small> : "" }
     </div>
 )

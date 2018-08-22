@@ -2,7 +2,7 @@ import { h } from "/local_modules/hyperapp/src/index";
 
 import {
   FirebaseLogin,
-  FirebaseQuery
+  FirebaseQuery,
 } from './firebase';
 
 const Login = state => [{
@@ -16,7 +16,7 @@ FirebaseLogin({
   username: state.loginData.username,
   password: state.loginData.password,
   action: LoginSuccess,
-  error: LoginError
+  error: LoginError,
 })
 ]
 
@@ -30,7 +30,7 @@ const LoginSuccess = (state) => [{
 },
 FirebaseQuery({
   props: {
-    collection: "items"
+    username: state.loginData.username
   },
   action: LoadItems
 })]
@@ -74,7 +74,7 @@ const LoadItems = (state, items) => ({
 })
 
 
-const LoginForm = ({ state }) => (
+export const LoginForm = ({ state }) => (
   <div class="container">
     <form onSubmit={Login}>
       <div class="row centered">
@@ -90,7 +90,13 @@ const LoginForm = ({ state }) => (
         </div>
       </div>
     </form>
+
+    <div class="container">
+      <div class="row">
+      <button class="btn btn-primary">
+      Login con Google
+      </button>
+      </div>
+    </div>
   </div>
 )
-
-export { LoginForm }

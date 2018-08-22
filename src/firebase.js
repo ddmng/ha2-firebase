@@ -17,6 +17,9 @@ const settings = { /* your settings... */
     timestampsInSnapshots: true
 };
 db.settings(settings);
+const itemsCollection = "items";
+const statusCollection = "status";
+
 
 function loginEffect(props, dispatch) {
     console.log("Logging in with props: ", props)
@@ -52,8 +55,11 @@ export function FirebaseLogin({
 }
 
 function queryEffect(props, dispatch) {
-    db.collection(props.props.collection).onSnapshot(querySnapshot => {
+ 
+    db.collection(itemsCollection).onSnapshot(querySnapshot => {
         const items = []
+        console.log("Received update from firebase!")
+
         querySnapshot.forEach((doc) => {
             items.push({
                 id: doc.id,
@@ -64,13 +70,16 @@ function queryEffect(props, dispatch) {
     }, e => {
         console.error("Error querying resource", e)
     });
+
 }
 
 export function FirebaseQuery(props) {
-    console.log("props: ", props)
+    console.log("FirebaseQuery props: ", props)
     return {
         props: props,
-        effect: queryEffect
+        effect: (props, dispatch) => {
+            queryEffect(props, dispatch)
+        } 
     }
 }
 
@@ -84,7 +93,7 @@ export function DeleteItem(props) {
 }
 
 function deleteItemEffect(props, dispatch) {
-    db.collection(props.props.collection).doc(props.props.item).delete().then(
+    db.collection(itemsCollection).doc(props.props.item).delete().then(
         () => dispatch(props.props.action, props.props.item)
     ).catch(error => console.log("Error deleting", props.props.item, error))
 }
@@ -99,12 +108,12 @@ export function AddItem(props) {
 }
 
 function addItemEffect(props, dispatch) {
-    db.collection(props.props.collection).doc().set({
+    db.collection(itemsCollection).doc().set({
         author: props.props.author,
         text: props.props.text,
         dateAdded: props.props.dateAdded
     }).then(
         () => dispatch(props.props.action, props.props.item)
-    ).catch(error => console.log("Error deleting", props.props.item, error))
+    ).catch(error => console.error("Error deleting", props.props.item, error))
 
 }
