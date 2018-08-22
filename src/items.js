@@ -74,7 +74,7 @@ export const InputForm = ({ state }) => (
         <div class="row">
             <input class="form-input" 
                 id="todoitem"
-                placeholder="Cosa dobbiamo comprare?"
+                placeholder="Add a new todo..."
                 onInput={UpdateNewTodo}
                 value={state.newtodo}
                 disabled={state.adding} />
@@ -82,7 +82,5 @@ export const InputForm = ({ state }) => (
                 onClick={NewTodo}
                 disabled={state.adding || !state.newtodo || state.newtodo.length === 0}><i class="fa fa-plus"></i></button>
         </div>
-        
-        {/* { state.writing ? <small>{state.writing} is writing</small> : "" } */}
     </div>
 )

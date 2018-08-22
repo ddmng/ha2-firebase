@@ -11,6 +11,9 @@ Sample TODO application with HAv2. Todos:
 * check if it's the correct way to use HAv2
 * add devtools
 
+## Demo
+Application is deployed at: https://hyperapp-38ccc.firebaseapp.com
+
 ## How to run
 
 Clone the repository, including the Hyperapp sources in the submodule:
