@@ -77,7 +77,6 @@ export const InputForm = ({ state }) => (
                 placeholder="Cosa dobbiamo comprare?"
                 onInput={UpdateNewTodo}
                 value={state.newtodo}
-                onKeyup={(e) => (e.keyCode == 13 ? NewTodo : state) }
                 disabled={state.adding} />
             <button class="btn btn-primary"
                 onClick={NewTodo}
