@@ -70,7 +70,7 @@ export const ItemsList = ({ state }) => (
 
 export const InputForm = ({ state }) => (
     <div class="container">
-        <form onSubmit={NewTodo} >
+        <form onSubmit={state.newtodo ? NewTodo : state} >
         <div class="row">
             <input class="form-input" 
                 id="todoitem"
@@ -80,9 +80,9 @@ export const InputForm = ({ state }) => (
                 disabled={state.adding} />
             <button class="btn btn-primary"
                 type="submit"
-                disabled={state.adding}><i class="fa fa-plus"></i></button>
+                disabled={state.adding || !state.newtodo || state.newtodo.length === 0}><i class="fa fa-plus"></i></button>
         </div>
         </form>
-        { state.writing ? <small>{state.writing} is writing</small> : "" }
+        {/* { state.writing ? <small>{state.writing} is writing</small> : "" } */}
     </div>
 )
