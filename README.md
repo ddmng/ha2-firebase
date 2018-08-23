@@ -1,4 +1,4 @@
-# hyperapp TODO on Firebase
+# Hyperapp V2 TODO on Firebase
 
 Exploring the new [Hyperapp](https://github.com/hyperapp/hyperapp) V2 WIP. A test with Firebase and PWA.
 
