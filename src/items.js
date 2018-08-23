@@ -1,5 +1,5 @@
 import { h } from "/local_modules/hyperapp/src/index";
-import { DeleteItem, AddItem, UpdateStatus } from './firebase'
+import { DeleteItem, AddItem } from './firebase'
 
 const Delete = (id) => (state) => [{
     ...state,

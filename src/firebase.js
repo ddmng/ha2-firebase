@@ -2,7 +2,7 @@ import firebase from '@firebase/app';
 import '@firebase/firestore'
 import "firebase/auth";
 
-// Firebase configuration
+/* Firebase configuration */
 var config = {
     apiKey: "AIzaSyBvOqs9TkUxEM184yIFLCFhNaCsgxHzPTc",
     authDomain: "hyperapp-38ccc.firebaseapp.com",
@@ -11,6 +11,8 @@ var config = {
     storageBucket: "hyperapp-38ccc.appspot.com",
     messagingSenderId: "220388866281"
 };
+
+/* Initialize firebase stuff */
 firebase.initializeApp(config);
 const db = firebase.firestore();
 const settings = { /* your settings... */
@@ -18,8 +20,9 @@ const settings = { /* your settings... */
 };
 db.settings(settings);
 const itemsCollection = "items";
-const statusCollection = "status";
 
+
+/* Login */
 function loginEffect(props, dispatch) {
     console.log("Logging in with props: ", props)
 
@@ -65,7 +68,7 @@ export function FirebaseLogin({
     }
 }
 
-
+/* Logout */
 function logoutEffect(props, dispatch) {
     console.log("Logging out")
 
@@ -77,6 +80,7 @@ function logoutEffect(props, dispatch) {
         dispatch(props.action, {})
     }).catch(function (error) {
         // An error happened.
+        console.error("Logout error: ", error)
     });
 }
 
@@ -91,21 +95,20 @@ export function FirebaseLogout({
     }
 }
 
-
+/* Query for items list */
 function queryEffect(props, dispatch) {
-
     db.collection(itemsCollection).onSnapshot(querySnapshot => {
         const items = []
         console.log("Received update from firebase!", querySnapshot)
 
         querySnapshot.docs
-        .sort((a,b) => (a.data().dateAdded > b.data().dateAdded))
-        .forEach((doc) => {
-            items.push({
-                id: doc.id,
-                data: doc.data()
-            })
-        });
+            .sort((a, b) => (a.data().dateAdded > b.data().dateAdded))
+            .forEach((doc) => {
+                items.push({
+                    id: doc.id,
+                    data: doc.data()
+                })
+            });
         dispatch(props.action, items)
     }, e => {
         console.error("Error querying resource", e)
@@ -124,6 +127,7 @@ export function FirebaseQuery(props) {
 }
 
 
+/* Delete item */
 export function DeleteItem(props) {
     console.log("props: ", props)
     return {
@@ -138,7 +142,7 @@ function deleteItemEffect(props, dispatch) {
     ).catch(error => console.log("Error deleting", props.props.item, error))
 }
 
-
+/* Add item */
 export function AddItem(props) {
     console.log("props: ", props)
     return {
@@ -155,5 +159,4 @@ function addItemEffect(props, dispatch) {
     }).then(
         () => dispatch(props.props.action, props.props.item)
     ).catch(error => console.error("Error deleting", props.props.item, error))
-
 }
