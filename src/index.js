@@ -3,7 +3,7 @@ import {
   app,
   h
 } from "/local_modules/hyperapp/src/index";
-import { LoginForm, Login } from './login'
+import { LoginForm, Login } from './auth'
 import { InputForm, ItemsList } from './items'
 import { Header } from './header'
 
