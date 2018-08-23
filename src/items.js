@@ -72,6 +72,10 @@ export const InputForm = ({ state }) => (
     <div class="container">
         
         <div class="row">
+        <form onsubmit={(state, event) => {
+                event.preventDefault(true)
+                return NewTodo
+            }}>
             <input class="form-input" 
                 id="todoitem"
                 placeholder="Add a new todo..."
@@ -79,8 +83,9 @@ export const InputForm = ({ state }) => (
                 value={state.newtodo}
                 disabled={state.adding} />
             <button class="btn btn-primary"
-                onClick={NewTodo}
+                type="submit"
                 disabled={state.adding || !state.newtodo || state.newtodo.length === 0}><i class="fa fa-plus"></i></button>
+        </form>
         </div>
     </div>
 )
