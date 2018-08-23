@@ -1,5 +1,6 @@
-# ha2-firebase
-Exploring the new Hyperapp V2 WIP. A test with Firebase and PWA.
+# hyperapp TODO on Firebase
+
+Exploring the new [Hyperapp](https://github.com/hyperapp/hyperapp) V2 WIP. A test with Firebase and PWA.
 
 Sample TODO application with HAv2. Todos:
 
@@ -10,6 +11,9 @@ Sample TODO application with HAv2. Todos:
 * ~~styling~~
 * check if it's the correct way to use HAv2
 * add devtools
+
+## Demo
+Application is deployed at: https://hyperapp-38ccc.firebaseapp.com
 
 ## How to run
 
