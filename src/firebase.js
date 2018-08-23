@@ -2,6 +2,7 @@ import firebase from '@firebase/app';
 import '@firebase/firestore'
 import "firebase/auth";
 
+
 /* Firebase configuration */
 var config = {
     apiKey: "AIzaSyBvOqs9TkUxEM184yIFLCFhNaCsgxHzPTc",
@@ -21,37 +22,44 @@ const settings = { /* your settings... */
 db.settings(settings);
 const itemsCollection = "items";
 
-
 /* Login */
 function loginEffect(props, dispatch) {
     console.log("Logging in with props: ", props)
+    
+    // Added to avoid requiring Google login
+    const SKIP_LOGIN = 1
 
-    let savedEmail = localStorage.getItem('email')
-    if (savedEmail) {
+    if (SKIP_LOGIN === 1) {
+        console.log("Skipping login...")
         dispatch(props.action, {
-            username: savedEmail
+            username: "demouser"
         })
     } else {
-
-        var provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithPopup(provider).then(function (result) {
-            console.log("Auth: ", result.user.email)
-            localStorage.setItem('email', result.user.email);
-            localStorage.setItem('token', result.credential.accessToken);
+        let savedEmail = localStorage.getItem('email')
+        if (savedEmail) {
             dispatch(props.action, {
-                username: result.user.email
+                username: savedEmail
             })
-        }).catch(function (error) {
-            var errorMessage = error.message;
-            // The email of the user's account used.
-            var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            var credential = error.credential;
+        } else {
+            var provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithPopup(provider).then(function (result) {
+                console.log("Auth: ", result.user.email)
+                localStorage.setItem('email', result.user.email);
+                localStorage.setItem('token', result.credential.accessToken);
+                dispatch(props.action, {
+                    username: result.user.email
+                })
+            }).catch(function (error) {
+                var errorMessage = error.message;
+                // The email of the user's account used.
+                var email = error.email;
+                // The firebase.auth.AuthCredential type that was used.
+                var credential = error.credential;
 
-            console.error("Error in auth: ", errorMessage)
-            dispatch(props.error, error)
-        });
-
+                console.error("Error in auth: ", errorMessage)
+                dispatch(props.error, error)
+            });
+        }
     }
 }
 
