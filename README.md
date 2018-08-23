@@ -23,7 +23,7 @@ Clone the repository:
 git clone https://github.com/ddmng/ha2-firebase.git
 ```
 
-Enter in the `local_modules` directory, clone hyperapp sources and change to branch V2:
+Enter in `local_modules` directory, clone hyperapp sources and change to branch V2:
 
 ```bash
 cd ha2-firebase/local_modules/
