@@ -71,7 +71,9 @@ export const LoginForm = ({ state }) => (
   <div class="container">
     <div class="container">
       <div class="row">
-        {state.loginData.loggedin == "in_progress" ? <h1><i class="fa fa-spinner fa-spin"></i></h1> : <button class="btn btn-primary" onClick={Login}><i class="fa fa-sign-in-alt"></i></button> }
+          {state.loginData.loggedin == "in_progress" 
+        ? <h1><i class="fa fa-spinner fa-spin"></i></h1> 
+        : <button class="btn btn-primary" onClick={Login}><i class="fa fa-sign-in-alt"></i></button> }
       </div>
     </div>
   </div>

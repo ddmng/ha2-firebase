@@ -32,7 +32,7 @@ function loginEffect(props, dispatch) {
     if (SKIP_LOGIN === 1) {
         console.log("Skipping login...")
         dispatch(props.action, {
-            username: "demouser"
+            username: "anonymous"
         })
     } else {
         let savedEmail = localStorage.getItem('email')

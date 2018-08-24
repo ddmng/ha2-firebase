@@ -16,10 +16,8 @@ const initialState = {
   items: []
 }
 
-export const loginMapper = (state) => state.loginData
-
 app({
-  init: Login(initialState, loginMapper),
+  init: Login(initialState),
   view: (state) => (
     <main>
       <header>
@@ -27,7 +25,9 @@ app({
       </header>
 
       <section class="login">
-        {state.loginData.loggedin !== "yes" ? <LoginForm state={state} /> : ""}
+        {state.loginData.loggedin !== "yes" 
+          ? <LoginForm state={state} /> 
+          : ""}
       </section>
 
       <section class="newitem">
