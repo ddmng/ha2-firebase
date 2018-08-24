@@ -25,14 +25,11 @@ const LogoutSuccess = (state) => ({
   }
 })
 
-export const Login = state => [(
-  {
+export const Login = (state, map) => [(
+  {...state,
     loginData: {
-      username: "",
       loggedin: "in_progress"
-    },
-    querying: false,
-    items: []
+    }
   }),
 FirebaseLogin({
   action: LoginSuccess,

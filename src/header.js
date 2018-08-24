@@ -1,5 +1,5 @@
 import { h } from "/local_modules/hyperapp/src/index"
-import { Logout } from "./login"
+import { Logout } from "./auth"
 
 export const Header = ({ state }) => (
     <div class="container">

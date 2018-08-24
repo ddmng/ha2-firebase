@@ -7,9 +7,19 @@ import { LoginForm, Login } from './auth'
 import { InputForm, ItemsList } from './items'
 import { Header } from './header'
 
+const initialState = {
+  loginData: {
+    username: "",
+    loggedin: "no"
+  },
+  querying: false,
+  items: []
+}
+
+export const loginMapper = (state) => state.loginData
 
 app({
-  init: Login,
+  init: Login(initialState, loginMapper),
   view: (state) => (
     <main>
       <header>
