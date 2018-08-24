@@ -4,3 +4,4 @@ dist
 .cache
 *log
 .vscode/temp.sql
+.vscode/last.sql
