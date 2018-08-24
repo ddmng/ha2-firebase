@@ -79,18 +79,16 @@ const loginError = (state, { error }) => ({
 
 export const LoginForm = ({ state }) => (
   <div class="container">
-    <div class="container">
-      <div class="row">
-        {state.loginData.loggedin == "in_progress" ? (
-          <h1>
-            <i class="fa fa-spinner fa-spin" />
-          </h1>
-        ) : (
-          <button class="btn btn-primary" onClick={login}>
-            <i class="fa fa-sign-in-alt" />
-          </button>
-        )}
-      </div>
+    <div class="row">
+      {state.loginData.loggedin == "in_progress" ? (
+        <h1>
+          <i class="fa fa-spinner fa-spin" />
+        </h1>
+      ) : (
+        <button class="btn btn-primary" onClick={login}>
+          <i class="fa fa-sign-in-alt" />
+        </button>
+      )}
     </div>
   </div>
 );
