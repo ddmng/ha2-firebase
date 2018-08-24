@@ -23,7 +23,7 @@ db.settings(settings);
 const itemsCollection = "items";
 
 /* Query for items list */
-export const syncItemsEffect = makeEffect((props, dispatch) =>
+export const syncItemsEffect = makeEffect(({props}, dispatch) =>
     db.collection(itemsCollection).onSnapshot(querySnapshot => {
         console.log("Received update from firebase!", querySnapshot)
 
@@ -44,7 +44,7 @@ export const syncItemsEffect = makeEffect((props, dispatch) =>
 
 
 /* Login */
-export const loginEffect = makeEffect((props, dispatch) => {
+export const loginEffect = makeEffect(({props}, dispatch) => {
     console.log("Logging in with props: ", props)
 
     // Added to avoid requiring Google login
@@ -62,6 +62,7 @@ export const loginEffect = makeEffect((props, dispatch) => {
         })
     } else {
         var provider = new firebase.auth.GoogleAuthProvider();
+        console.log("Signing in with Google")
         firebase.auth().signInWithPopup(provider).then(function (result) {
             console.log("Auth: ", result.user.email)
             localStorage.setItem('email', result.user.email);
@@ -83,7 +84,7 @@ export const loginEffect = makeEffect((props, dispatch) => {
 })
 
 /* Logout */
-export const logoutEffect = makeEffect( (props, dispatch) => {
+export const logoutEffect = makeEffect( ({props}, dispatch) => {
     console.log("Logging out")
 
     firebase.auth().signOut().then(function () {
@@ -99,7 +100,7 @@ export const logoutEffect = makeEffect( (props, dispatch) => {
     });
 })
 
- export const deleteItemEffect = makeEffect((props, dispatch) => {
+ export const deleteItemEffect = makeEffect(({props}, dispatch) => {
     db.collection(itemsCollection).doc(props.item).delete().then(
         () => dispatch(props.success, props.item)
     ).catch(error => {
@@ -108,7 +109,7 @@ export const logoutEffect = makeEffect( (props, dispatch) => {
     })
 })
 
-export const addItemEffect = makeEffect((props, dispatch) => {
+export const addItemEffect = makeEffect(({props}, dispatch) => {
     db.collection(itemsCollection).doc().set({
         author: props.author,
         text: props.text,

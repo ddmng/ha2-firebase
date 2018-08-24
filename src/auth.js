@@ -54,7 +54,7 @@ export const login = (state) => [(
     }
   }),
 loginEffect({
-  anonymous: state.anonymous,
+  anonymous: state.allowAnonymous,
   success: loginSuccess,
   failure: loginError,
 })

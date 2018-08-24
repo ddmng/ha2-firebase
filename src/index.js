@@ -12,7 +12,7 @@ const initialState = {
   ...authState,
   querying: false,
   items: [],
-  anonymous: true
+  allowAnonymous: true
 }
 
 app({
