@@ -1,9 +1,9 @@
 import { h } from "/local_modules/hyperapp/src/index";
 
 import {
-  FirebaseLogin,
-  FirebaseQuery,
-  FirebaseLogout,
+  loginEffect,
+  logoutEffect,
+  syncItemsEffect,
 } from './firebase';
 
 export const Logout = state => [(
@@ -12,8 +12,9 @@ export const Logout = state => [(
     querying: true
   }
 ),
-FirebaseLogout({
-  action: LogoutSuccess
+logoutEffect({
+  success: LogoutSuccess,
+  failure: LogoutFailure
 })]
 
 
@@ -25,15 +26,25 @@ const LogoutSuccess = (state) => ({
   }
 })
 
-export const Login = (state, map) => [(
+const LogoutFailure = (state, error) => ({
+  ...state,
+  loginData: {
+    ...state.loginData,
+    loggedin: "no",
+    error: error
+  }
+})
+
+export const Login = (state) => [(
   {...state,
     loginData: {
       loggedin: "in_progress"
     }
   }),
-FirebaseLogin({
-  action: LoginSuccess,
-  error: LoginError,
+loginEffect({
+  anonymous: state.anonymous,
+  success: LoginSuccess,
+  failure: LoginError,
 })
 ]
 
@@ -46,11 +57,9 @@ const LoginSuccess = (state, {username}) => [{
     querying: true
   }
 },
-FirebaseQuery({
-  props: {
-    username: state.loginData.username
-  },
-  action: LoadItems
+syncItemsEffect({
+  success: LoadItems,
+  failure: LoadItemsFail
 })]
 
 const LoginError = (state) => ({
@@ -65,6 +74,12 @@ const LoadItems = (state, items) => ({
   ...state,
   querying: false,
   items: items
+})
+
+const LoadItemsFail = (state) => ({
+  ...state,
+  querying: false,
+  items: []
 })
 
 export const LoginForm = ({ state }) => (

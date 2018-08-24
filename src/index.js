@@ -13,7 +13,8 @@ const initialState = {
     loggedin: "no"
   },
   querying: false,
-  items: []
+  items: [],
+  anonymous: true
 }
 
 app({
