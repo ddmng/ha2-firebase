@@ -3,23 +3,20 @@ import {
   app,
   h
 } from "/local_modules/hyperapp/src/index";
-import { LoginForm, Login } from './auth'
+import { LoginForm, login, state as authState } from './auth'
 import { InputForm, ItemsList } from './items'
 import { Header } from './header'
 import { ShowState } from './utils'
 
 const initialState = {
-  loginData: {
-    username: "",
-    loggedin: "no"
-  },
+  ...authState,
   querying: false,
   items: [],
   anonymous: true
 }
 
 app({
-  init: Login(initialState),
+  init: login(initialState),
   view: (state) => (
     <main>
       <header>

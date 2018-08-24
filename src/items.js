@@ -6,28 +6,28 @@ const Delete = (id) => (state) => [{
 },
 deleteItemEffect({
         item: id,
-        success: ItemDeleted(id),
-        failure: DeleteItemError
+        success: itemDeleted(id),
+        failure: itemDeleteFail
 })]
 
-const ItemDeleted = (id) => (state) => ({
+const itemDeleted = (id) => (state) => ({
     ...state,
     deleted: id,
     error: ''
 })
 
-const DeleteItemError = (state, error) => ({
+const itemDeleteFail = (state, error) => ({
     ...state,
     deleted: '',
     error: error
 })
 
-const UpdateNewTodo = (state, { target: { value } }) => ({
+const newTodoUpdate = (state, { target: { value } }) => ({
     ...state,
     newtodo: value,
 })
 
-const NewTodo = (state) => [{
+const todoAdd = (state) => [{
     ...state,
     adding: true
 },
@@ -35,22 +35,34 @@ addItemEffect({
         text: state.newtodo,
         author: state.loginData.username,
         dateAdded: new Date(),
-        success: TodoAdded(state.newtodo),
-        failure: NewTodoError
+        success: todoAdded(state.newtodo),
+        failure: todoAddFail
 }
 )]
 
-const TodoAdded = (text) => (state) => ({
+const todoAdded = (text) => (state) => ({
     ...state,
     newtodo: "",
     adding: false,
     error: ''
 })
 
-const NewTodoError = (state, error) => ({
+const todoAddFail = (state, error) => ({
     ...state,
     adding: false,
     error: error
+})
+
+export const itemsLoad = (state, items) => ({
+    ...state,
+    querying: false,
+    items: items
+  })
+  
+export const itemsLoadFail = (state) => ({
+    ...state,
+    querying: false,
+    items: []
 })
 
 const Item = ({ id, author, dateAdded, text }) => (
@@ -83,12 +95,12 @@ export const InputForm = ({ state }) => (
         <div class="row">
         <form onsubmit={(state, event) => {
                 event.preventDefault(true)
-                return NewTodo
+                return todoAdd
             }}>
             <input class="form-input" 
                 id="todoitem"
                 placeholder="Add a new todo..."
-                onInput={UpdateNewTodo}
+                onInput={newTodoUpdate}
                 value={state.newtodo}
                 disabled={state.adding} />
             <button class="btn btn-primary"

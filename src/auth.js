@@ -5,28 +5,40 @@ import {
   logoutEffect,
   syncItemsEffect,
 } from './firebase';
+import {
+  itemsLoad,
+  itemsLoadFail
+} from './items'
 
-export const Logout = state => [(
+export const state = {
+  loginData: {
+    username: "",
+    loggedin: "no"
+  }
+} 
+
+export const logout = state => [(
   {
     ...state,
     querying: true
   }
 ),
 logoutEffect({
-  success: LogoutSuccess,
-  failure: LogoutFailure
+  success: logoutSuccess,
+  failure: logoutFailure
 })]
 
 
-const LogoutSuccess = (state) => ({
+const logoutSuccess = (state) => ({
   ...state,
   loginData: {
     ...state.loginData,
     loggedin: "no",
+    username: ""
   }
 })
 
-const LogoutFailure = (state, error) => ({
+const logoutFailure = (state, error) => ({
   ...state,
   loginData: {
     ...state.loginData,
@@ -35,7 +47,7 @@ const LogoutFailure = (state, error) => ({
   }
 })
 
-export const Login = (state) => [(
+export const login = (state) => [(
   {...state,
     loginData: {
       loggedin: "in_progress"
@@ -43,44 +55,33 @@ export const Login = (state) => [(
   }),
 loginEffect({
   anonymous: state.anonymous,
-  success: LoginSuccess,
-  failure: LoginError,
+  success: loginSuccess,
+  failure: loginError,
 })
 ]
 
-const LoginSuccess = (state, {username}) => [{
+const loginSuccess = (state, {username}) => [{
   ...state,
   loginData: {
     ...state.loginData,
     username: username,
     loggedin: "yes",
-    querying: true
   }
 },
 syncItemsEffect({
-  success: LoadItems,
-  failure: LoadItemsFail
+  success: itemsLoad,
+  failure: itemsLoadFail
 })]
 
-const LoginError = (state) => ({
+const loginError = (state, {error}) => ({
   ...state,
   loginData: {
     ...state.loginData,
-    loggedin: "error"
+    loggedin: "no",
+    error: error
   }
 })
 
-const LoadItems = (state, items) => ({
-  ...state,
-  querying: false,
-  items: items
-})
-
-const LoadItemsFail = (state) => ({
-  ...state,
-  querying: false,
-  items: []
-})
 
 export const LoginForm = ({ state }) => (
   <div class="container">
@@ -88,7 +89,7 @@ export const LoginForm = ({ state }) => (
       <div class="row">
           {state.loginData.loggedin == "in_progress" 
         ? <h1><i class="fa fa-spinner fa-spin"></i></h1> 
-        : <button class="btn btn-primary" onClick={Login}><i class="fa fa-sign-in-alt"></i></button> }
+        : <button class="btn btn-primary" onClick={login}><i class="fa fa-sign-in-alt"></i></button> }
       </div>
     </div>
   </div>
