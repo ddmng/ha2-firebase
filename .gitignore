@@ -3,3 +3,4 @@ dist
 .sonarlint
 .cache
 *log
+.vscode/temp.sql
