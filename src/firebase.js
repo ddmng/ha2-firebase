@@ -1,9 +1,10 @@
 import firebase from '@firebase/app';
 import '@firebase/firestore'
 import "firebase/auth";
+import { makeEffect } from './utils'
 
 /* Firebase configuration */
-const config = {
+const FIREBASE_CONFIG = {
     apiKey: "AIzaSyBvOqs9TkUxEM184yIFLCFhNaCsgxHzPTc",
     authDomain: "hyperapp-38ccc.firebaseapp.com",
     databaseURL: "https://hyperapp-38ccc.firebaseio.com",
@@ -13,18 +14,13 @@ const config = {
 };
 
 /* Initialize firebase stuff */
-firebase.initializeApp(config);
+firebase.initializeApp(FIREBASE_CONFIG);
 const db = firebase.firestore();
 const settings = { /* your settings... */
     timestampsInSnapshots: true
 };
 db.settings(settings);
 const itemsCollection = "items";
-
-const makeEffect = effect => props => ({
-    effect,
-    props
-})
 
 /* Query for items list */
 export const syncItemsEffect = makeEffect((props, dispatch) =>

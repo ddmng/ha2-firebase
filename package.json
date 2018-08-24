@@ -22,7 +22,8 @@
     "firebase-admin": "^6.0.0",
     "firebase-auth": "^0.1.2",
     "firebase-functions": "^2.0.5",
-    "firebaseui": "^3.4.0"
+    "firebaseui": "^3.4.0",
+    "utils": "^0.3.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

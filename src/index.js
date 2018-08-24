@@ -6,6 +6,7 @@ import {
 import { LoginForm, Login } from './auth'
 import { InputForm, ItemsList } from './items'
 import { Header } from './header'
+import { ShowState } from './utils'
 
 const initialState = {
   loginData: {
@@ -40,7 +41,7 @@ app({
       </section>
 
       <footer>
-
+        <ShowState state={state} />
       </footer>
     </main>
   ),

@@ -67,3 +67,16 @@ Layout Styles
   font-size: 0.75em;
   font-style: italic;
 }
+
+footer {
+  @include flexbox-display();
+  margin-top: 20px;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  pre {
+    font-size: .9em;
+    background-color: ghostwhite;
+    border: 1px solid silver;
+    padding: 10px 10px;
+  }
+}
