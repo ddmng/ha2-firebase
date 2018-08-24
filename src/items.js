@@ -1,48 +1,57 @@
 import { h } from "/local_modules/hyperapp/src/index";
-import { DeleteItem, AddItem } from './firebase'
+import { deleteItemEffect, addItemEffect } from './firebase'
 
 const Delete = (id) => (state) => [{
     ...state,
 },
-DeleteItem({
-    props: {
+deleteItemEffect({
         item: id,
-        action: ItemDeleted(id)
-    }
+        success: ItemDeleted(id),
+        failure: DeleteItemError
 })]
 
 const ItemDeleted = (id) => (state) => ({
     ...state,
-    deleted: id
+    deleted: id,
+    error: ''
 })
 
+const DeleteItemError = (state, error) => ({
+    ...state,
+    deleted: '',
+    error: error
+})
 
 const UpdateNewTodo = (state, { target: { value } }) => ({
     ...state,
-    newtodo: value
+    newtodo: value,
 })
 
 const NewTodo = (state) => [{
     ...state,
     adding: true
 },
-AddItem({
-    props: {
+addItemEffect({
         text: state.newtodo,
         author: state.loginData.username,
         dateAdded: new Date(),
-        action: TodoAdded(state.newtodo)
-    }
+        success: TodoAdded(state.newtodo),
+        failure: NewTodoError
 }
 )]
 
 const TodoAdded = (text) => (state) => ({
     ...state,
-    added: text,
     newtodo: "",
-    adding: false
+    adding: false,
+    error: ''
 })
 
+const NewTodoError = (state, error) => ({
+    ...state,
+    adding: false,
+    error: error
+})
 
 const Item = ({ id, author, dateAdded, text }) => (
             <div class="item-data">

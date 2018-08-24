@@ -99,36 +99,25 @@ export const logoutEffect = makeEffect( (props, dispatch) => {
     });
 })
 
-/* Delete item */
-export function DeleteItem(props) {
-    console.log("props: ", props)
-    return {
-        props: props,
-        effect: deleteItemEffect
-    }
-}
+ export const deleteItemEffect = makeEffect((props, dispatch) => {
+    db.collection(itemsCollection).doc(props.item).delete().then(
+        () => dispatch(props.success, props.item)
+    ).catch(error => {
+        console.log("Error deleting", props.item, error)
+        dispatch(props.failure, error)
+    })
+})
 
-function deleteItemEffect(props, dispatch) {
-    db.collection(itemsCollection).doc(props.props.item).delete().then(
-        () => dispatch(props.props.action, props.props.item)
-    ).catch(error => console.log("Error deleting", props.props.item, error))
-}
-
-/* Add item */
-export function AddItem(props) {
-    console.log("props: ", props)
-    return {
-        props: props,
-        effect: addItemEffect
-    }
-}
-
-function addItemEffect(props, dispatch) {
+export const addItemEffect = makeEffect((props, dispatch) => {
     db.collection(itemsCollection).doc().set({
-        author: props.props.author,
-        text: props.props.text,
-        dateAdded: props.props.dateAdded
+        author: props.author,
+        text: props.text,
+        dateAdded: props.dateAdded
     }).then(
-        () => dispatch(props.props.action, props.props.item)
-    ).catch(error => console.error("Error deleting", props.props.item, error))
-}
+        () => dispatch(props.success, props.item)
+    ).catch(error => {
+        console.error("Error deleting", props.item, error)
+        dispatch(props.failure, error)
+    }
+    )
+})
