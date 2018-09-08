@@ -1,6 +1,6 @@
 import { h } from "/local_modules/hyperapp/src/index";
 
-import { loginEffect, logoutEffect, syncItemsEffect } from "./firebase";
+import { Login, Logout, syncItemsEffect } from "./firebase";
 import { itemsLoad, itemsLoadFail } from "./items";
 
 export const state = {
@@ -15,7 +15,7 @@ export const logout = state => [
     ...state,
     querying: true
   },
-  logoutEffect({
+  Logout({
     success: logoutSuccess,
     failure: logoutFailure
   })
@@ -46,7 +46,7 @@ export const login = state => [
       loggedin: "in_progress"
     }
   },
-  loginEffect({
+  Login({
     anonymous: state.allowAnonymous,
     success: loginSuccess,
     failure: loginError

@@ -44,7 +44,12 @@ export const syncItemsEffect = makeEffect(({props}, dispatch) =>
 
 
 /* Login */
-export const loginEffect = makeEffect(({props}, dispatch) => {
+export const Login = (props) => ({
+    effect: loginEffect,
+    props: props
+})
+
+const loginEffect = (props, dispatch) => {
     console.log("Logging in with props: ", props)
 
     // Added to avoid requiring Google login
@@ -81,10 +86,15 @@ export const loginEffect = makeEffect(({props}, dispatch) => {
             dispatch(props.failure, error)
         });
     }
-})
+}
 
 /* Logout */
-export const logoutEffect = makeEffect( ({props}, dispatch) => {
+export const Logout = (props) => ({
+    effect: logoutEffect,
+    props: props
+})
+
+const logoutEffect = (props, dispatch) => {
     console.log("Logging out")
 
     firebase.auth().signOut().then(function () {
@@ -98,7 +108,7 @@ export const logoutEffect = makeEffect( ({props}, dispatch) => {
         console.error("Logout error: ", error)
         dispatch(action.failure, error)
     });
-})
+}
 
  export const deleteItemEffect = makeEffect(({props}, dispatch) => {
     db.collection(itemsCollection).doc(props.item).delete().then(
