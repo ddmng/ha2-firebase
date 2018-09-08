@@ -1,11 +1,11 @@
 import { h } from "/local_modules/hyperapp/src/index";
-import { deleteItemEffect, addItemEffect } from "./firebase";
+import { DeleteItem, AddItem } from "./firebase";
 
 const Delete = id => state => [
   {
     ...state
   },
-  deleteItemEffect({
+  DeleteItem({
     item: id,
     success: itemDeleted(id),
     failure: itemDeleteFail
@@ -34,7 +34,7 @@ const todoAdd = state => [
     ...state,
     adding: true
   },
-  addItemEffect({
+  AddItem({
     text: state.newtodo,
     author: state.loginData.username,
     dateAdded: new Date(),
