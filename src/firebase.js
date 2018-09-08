@@ -23,7 +23,12 @@ db.settings(settings);
 const itemsCollection = "items";
 
 /* Query for items list */
-export const syncItemsEffect = makeEffect(({props}, dispatch) =>
+export const SyncItems = (props) => ({
+    effect: syncItemsEffect,
+    props: props
+})
+
+const syncItemsEffect = (props, dispatch) =>
     db.collection(itemsCollection).onSnapshot(querySnapshot => {
         console.log("Received update from firebase!", querySnapshot)
 
@@ -40,7 +45,7 @@ export const syncItemsEffect = makeEffect(({props}, dispatch) =>
     }, e => {
         console.error("Error querying resource", e)
         dispatch(props.failure);
-    }))
+    })
 
 
 /* Login */
