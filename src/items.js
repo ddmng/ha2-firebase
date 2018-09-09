@@ -43,6 +43,11 @@ const todoAdd = state => [
   })
 ];
 
+const Undo = (state, {text}) => todoAdd({
+  ...state,
+  newtodo: text
+})
+
 const todoAdded = state => ({
   ...state,
   newtodo: "",
@@ -123,6 +128,14 @@ export const InputForm = ({ state }) => (
           }
         >
           <i class="fa fa-plus" />
+        </button>
+        <button
+          class="btn btn-warning"
+          type="button"
+          disabled={ !state.deleted }
+          onClick= { [ Undo, {text: state.deleted}] }
+        >
+          <i class="fa fa-undo" />
         </button>
       </form>
     </div>
