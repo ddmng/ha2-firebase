@@ -1,4 +1,5 @@
 import "/scss/style.scss";
+
 import { app, h } from "/local_modules/hyperapp/src/index";
 import { LoginForm, login, state as authState } from "./auth";
 import { InputForm, ItemsList } from "./items";
@@ -9,7 +10,7 @@ const initialState = {
   ...authState,
   querying: false,
   items: [],
-  allowAnonymous: true
+  allowAnonymous: true,
 };
 
 app({
@@ -37,7 +38,8 @@ app({
       </footer>
     </main>
   ),
-  subscribe: s => console.log("STATE: ", s),
+  subscriptions: state =>
+    console.log("STATE", state),
   container: document.querySelector("body")
 });
 

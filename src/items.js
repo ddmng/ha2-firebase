@@ -1,20 +1,20 @@
 import { h } from "/local_modules/hyperapp/src/index";
 import { DeleteItem, AddItem } from "./firebase";
 
-const Delete = id => state => [
+const Delete = (state, { id, text }) => [
   {
     ...state
   },
   DeleteItem({
     item: id,
-    success: itemDeleted(id),
+    success: [itemDeleted, { text }],
     failure: itemDeleteFail
   })
 ];
 
-const itemDeleted = id => state => ({
+const itemDeleted = (state, { text }) => ({
   ...state,
-  deleted: id,
+  deleted: text,
   error: ""
 });
 
@@ -38,16 +38,17 @@ const todoAdd = state => [
     text: state.newtodo,
     author: state.loginData.username,
     dateAdded: new Date(),
-    success: todoAdded(state.newtodo),
+    success: todoAdded,
     failure: todoAddFail
   })
 ];
 
-const todoAdded = text => state => ({
+const todoAdded = state => ({
   ...state,
   newtodo: "",
   adding: false,
-  error: ""
+  error: "",
+  deleted: ""
 });
 
 const todoAddFail = (state, error) => ({
@@ -69,14 +70,14 @@ export const itemsLoadFail = state => ({
 });
 
 const Item = ({ id, author, dateAdded, text }) => (
-  <div class="item-data">
+  <div class="item-data w3-animate-bottom">
     <div>
       <div class="item-title">{text}</div>
       <div class="item-metadata">
         {author}, <small>{dateAdded.toDate().toLocaleDateString()}</small>
       </div>
     </div>
-    <button onClick={Delete(id)} class="btn btn-delete">
+    <button onClick={[Delete, { id, text }]} class="btn btn-delete">
       <i class="fa fa-trash-alt" />
     </button>
   </div>
@@ -101,7 +102,7 @@ export const InputForm = ({ state }) => (
   <div class="container">
     <div class="row">
       <form
-        onsubmit={(state, event) => {
+        onsubmit={(_, event) => {
           event.preventDefault(true);
           return todoAdd;
         }}

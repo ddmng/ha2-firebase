@@ -86,10 +86,10 @@ export const LoginForm = ({ state }) => (
             <i class="fa fa-spinner fa-spin" />
           </h1>
         ) : (
-          <button class="btn btn-primary" onClick={login}>
-            <i class="fa fa-sign-in-alt" />
-          </button>
-        )}
+            <button class="btn btn-primary" onClick={login}>
+              <i class="fa fa-sign-in-alt" />
+            </button>
+          )}
       </div>
     </div>
   </div>
