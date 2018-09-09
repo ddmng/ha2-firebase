@@ -7,29 +7,29 @@ const Delete = (state, { id, text }) => [
   },
   DeleteItem({
     item: id,
-    success: [itemDeleted, { text }],
-    failure: itemDeleteFail
+    success: [ItemDeleted, { text }],
+    failure: ItemDeleteFail
   })
 ];
 
-const itemDeleted = (state, { text }) => ({
+const ItemDeleted = (state, { text }) => ({
   ...state,
   deleted: text,
   error: ""
 });
 
-const itemDeleteFail = (state, error) => ({
+const ItemDeleteFail = (state, error) => ({
   ...state,
   deleted: "",
   error: error
 });
 
-const newTodoUpdate = (state, { target: { value } }) => ({
+const NewTodoUpdate = (state, { target: { value } }) => ({
   ...state,
   newtodo: value
 });
 
-const todoAdd = state => [
+const TodoAdd = state => [
   {
     ...state,
     adding: true
@@ -38,17 +38,17 @@ const todoAdd = state => [
     text: state.newtodo,
     author: state.loginData.username,
     dateAdded: new Date(),
-    success: todoAdded,
-    failure: todoAddFail
+    success: TodoAdded,
+    failure: TodoAddFail
   })
 ];
 
-const Undo = (state, {text}) => todoAdd({
+const Undo = (state, {text}) => TodoAdd({
   ...state,
   newtodo: text
 })
 
-const todoAdded = state => ({
+const TodoAdded = state => ({
   ...state,
   newtodo: "",
   adding: false,
@@ -56,19 +56,19 @@ const todoAdded = state => ({
   deleted: ""
 });
 
-const todoAddFail = (state, error) => ({
+const TodoAddFail = (state, error) => ({
   ...state,
   adding: false,
   error: error
 });
 
-export const itemsLoad = (state, items) => ({
+export const ItemsLoad = (state, items) => ({
   ...state,
   querying: false,
   items: items
 });
 
-export const itemsLoadFail = state => ({
+export const ItemsLoadFail = state => ({
   ...state,
   querying: false,
   items: []
@@ -109,14 +109,14 @@ export const InputForm = ({ state }) => (
       <form
         onsubmit={(_, event) => {
           event.preventDefault(true);
-          return todoAdd;
+          return TodoAdd;
         }}
       >
         <input
           class="form-input"
           id="todoitem"
           placeholder="Add a new todo..."
-          onInput={newTodoUpdate}
+          onInput={NewTodoUpdate}
           value={state.newtodo}
           disabled={state.adding}
         />

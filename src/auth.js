@@ -1,7 +1,7 @@
 import { h } from "/local_modules/hyperapp/src/index";
 
 import { Login, Logout, SyncItems } from "./firebase";
-import { itemsLoad, itemsLoadFail } from "./items";
+import { ItemsLoad, ItemsLoadFail } from "./items";
 
 export const state = {
   loginData: {
@@ -63,8 +63,8 @@ const loginSuccess = (state, { username }) => [
     }
   },
   SyncItems({
-    success: itemsLoad,
-    failure: itemsLoadFail
+    success: ItemsLoad,
+    failure: ItemsLoadFail
   })
 ];
 
