@@ -74,9 +74,11 @@ footer {
   flex-flow: row nowrap;
   justify-content: space-around;
   pre {
-    font-size: .9em;
+    font-size: .8em;
     background-color: ghostwhite;
     border: 1px solid silver;
     padding: 10px 10px;
+    width: 300px;
+    overflow: hidden;
   }
 }

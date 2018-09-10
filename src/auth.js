@@ -1,7 +1,7 @@
 import { h } from "/local_modules/hyperapp/src/index";
 
-import { loginEffect, logoutEffect, syncItemsEffect } from "./firebase";
-import { itemsLoad, itemsLoadFail } from "./items";
+import { Login, Logout, SyncItems } from "./firebase";
+import { ItemsLoad, ItemsLoadFail } from "./items";
 
 export const state = {
   loginData: {
@@ -15,7 +15,7 @@ export const logout = state => [
     ...state,
     querying: true
   },
-  logoutEffect({
+  Logout({
     success: logoutSuccess,
     failure: logoutFailure
   })
@@ -46,7 +46,7 @@ export const login = state => [
       loggedin: "in_progress"
     }
   },
-  loginEffect({
+  Login({
     anonymous: state.allowAnonymous,
     success: loginSuccess,
     failure: loginError
@@ -62,9 +62,9 @@ const loginSuccess = (state, { username }) => [
       loggedin: "yes"
     }
   },
-  syncItemsEffect({
-    success: itemsLoad,
-    failure: itemsLoadFail
+  SyncItems({
+    success: ItemsLoad,
+    failure: ItemsLoadFail
   })
 ];
 
@@ -79,16 +79,18 @@ const loginError = (state, { error }) => ({
 
 export const LoginForm = ({ state }) => (
   <div class="container">
-    <div class="row">
-      {state.loginData.loggedin == "in_progress" ? (
-        <h1>
-          <i class="fa fa-spinner fa-spin" />
-        </h1>
-      ) : (
-        <button class="btn btn-primary" onClick={login}>
-          <i class="fa fa-sign-in-alt" />
-        </button>
-      )}
+    <div class="container">
+      <div class="row">
+        {state.loginData.loggedin == "in_progress" ? (
+          <h1>
+            <i class="fa fa-spinner fa-spin" />
+          </h1>
+        ) : (
+            <button class="btn btn-primary" onClick={login}>
+              <i class="fa fa-sign-in-alt" />
+            </button>
+          )}
+      </div>
     </div>
   </div>
 );

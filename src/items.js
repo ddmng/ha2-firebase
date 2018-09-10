@@ -1,82 +1,88 @@
 import { h } from "/local_modules/hyperapp/src/index";
-import { deleteItemEffect, addItemEffect } from "./firebase";
+import { DeleteItem, AddItem } from "./firebase";
 
-const Delete = id => state => [
+const Delete = (state, { id, text }) => [
   {
     ...state
   },
-  deleteItemEffect({
+  DeleteItem({
     item: id,
-    success: itemDeleted(id),
-    failure: itemDeleteFail
+    success: [ItemDeleted, { text }],
+    failure: ItemDeleteFail
   })
 ];
 
-const itemDeleted = id => state => ({
+const ItemDeleted = (state, { text }) => ({
   ...state,
-  deleted: id,
+  deleted: text,
   error: ""
 });
 
-const itemDeleteFail = (state, error) => ({
+const ItemDeleteFail = (state, error) => ({
   ...state,
   deleted: "",
   error: error
 });
 
-const newTodoUpdate = (state, { target: { value } }) => ({
+const NewTodoUpdate = (state, { target: { value } }) => ({
   ...state,
   newtodo: value
 });
 
-const todoAdd = state => [
+const TodoAdd = state => [
   {
     ...state,
     adding: true
   },
-  addItemEffect({
+  AddItem({
     text: state.newtodo,
     author: state.loginData.username,
     dateAdded: new Date(),
-    success: todoAdded(state.newtodo),
-    failure: todoAddFail
+    success: TodoAdded,
+    failure: TodoAddFail
   })
 ];
 
-const todoAdded = text => state => ({
+const Undo = (state, {text}) => TodoAdd({
+  ...state,
+  newtodo: text
+})
+
+const TodoAdded = state => ({
   ...state,
   newtodo: "",
   adding: false,
-  error: ""
+  error: "",
+  deleted: ""
 });
 
-const todoAddFail = (state, error) => ({
+const TodoAddFail = (state, error) => ({
   ...state,
   adding: false,
   error: error
 });
 
-export const itemsLoad = (state, items) => ({
+export const ItemsLoad = (state, items) => ({
   ...state,
   querying: false,
   items: items
 });
 
-export const itemsLoadFail = state => ({
+export const ItemsLoadFail = state => ({
   ...state,
   querying: false,
   items: []
 });
 
 const Item = ({ id, author, dateAdded, text }) => (
-  <div class="item-data">
+  <div class="item-data w3-animate-bottom">
     <div>
       <div class="item-title">{text}</div>
       <div class="item-metadata">
         {author}, <small>{dateAdded.toDate().toLocaleDateString()}</small>
       </div>
     </div>
-    <button onClick={Delete(id)} class="btn btn-delete">
+    <button onClick={[Delete, { id, text }]} class="btn btn-delete">
       <i class="fa fa-trash-alt" />
     </button>
   </div>
@@ -101,16 +107,16 @@ export const InputForm = ({ state }) => (
   <div class="container">
     <div class="row">
       <form
-        onsubmit={(state, event) => {
+        onsubmit={(_, event) => {
           event.preventDefault(true);
-          return todoAdd;
+          return TodoAdd;
         }}
       >
         <input
           class="form-input"
           id="todoitem"
           placeholder="Add a new todo..."
-          onInput={newTodoUpdate}
+          onInput={NewTodoUpdate}
           value={state.newtodo}
           disabled={state.adding}
         />
@@ -122,6 +128,14 @@ export const InputForm = ({ state }) => (
           }
         >
           <i class="fa fa-plus" />
+        </button>
+        <button
+          class="btn btn-warning"
+          type="button"
+          disabled={ !state.deleted }
+          onClick= { [ Undo, {text: state.deleted}] }
+        >
+          <i class="fa fa-undo" />
         </button>
       </form>
     </div>

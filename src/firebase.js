@@ -23,7 +23,12 @@ db.settings(settings);
 const itemsCollection = "items";
 
 /* Query for items list */
-export const syncItemsEffect = makeEffect(({props}, dispatch) =>
+export const SyncItems = (props) => ({
+    effect: syncItemsEffect,
+    props: props
+})
+
+const syncItemsEffect = ({ props }, dispatch) =>
     db.collection(itemsCollection).onSnapshot(querySnapshot => {
         console.log("Received update from firebase!", querySnapshot)
 
@@ -40,11 +45,16 @@ export const syncItemsEffect = makeEffect(({props}, dispatch) =>
     }, e => {
         console.error("Error querying resource", e)
         dispatch(props.failure);
-    }))
+    })
 
 
 /* Login */
-export const loginEffect = makeEffect(({props}, dispatch) => {
+export const Login = (props) => ({
+    effect: loginEffect,
+    props: props
+})
+
+const loginEffect = ({ props }, dispatch) => {
     console.log("Logging in with props: ", props)
 
     // Added to avoid requiring Google login
@@ -81,10 +91,15 @@ export const loginEffect = makeEffect(({props}, dispatch) => {
             dispatch(props.failure, error)
         });
     }
-})
+}
 
 /* Logout */
-export const logoutEffect = makeEffect( ({props}, dispatch) => {
+export const Logout = (props) => ({
+    effect: logoutEffect,
+    props: props
+})
+
+const logoutEffect = ({ props }, dispatch) => {
     console.log("Logging out")
 
     firebase.auth().signOut().then(function () {
@@ -98,18 +113,28 @@ export const logoutEffect = makeEffect( ({props}, dispatch) => {
         console.error("Logout error: ", error)
         dispatch(action.failure, error)
     });
+}
+
+export const DeleteItem = (props) => ({
+    effect: deleteItemEffect,
+    props: props
 })
 
- export const deleteItemEffect = makeEffect(({props}, dispatch) => {
+const deleteItemEffect = ({ props }, dispatch) => {
     db.collection(itemsCollection).doc(props.item).delete().then(
         () => dispatch(props.success, props.item)
     ).catch(error => {
         console.log("Error deleting", props.item, error)
         dispatch(props.failure, error)
     })
+}
+
+export const AddItem = (props) => ({
+    effect: addItemEffect,
+    props: props
 })
 
-export const addItemEffect = makeEffect(({props}, dispatch) => {
+const addItemEffect = ({ props }, dispatch) => {
     db.collection(itemsCollection).doc().set({
         author: props.author,
         text: props.text,
@@ -121,4 +146,4 @@ export const addItemEffect = makeEffect(({props}, dispatch) => {
         dispatch(props.failure, error)
     }
     )
-})
+}
