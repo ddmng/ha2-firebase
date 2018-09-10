@@ -1,5 +1,6 @@
 import { h } from "/local_modules/hyperapp/src/index";
 import { DeleteItem, AddItem } from "./firebase";
+import { preventDefault } from './fx'
 
 const Delete = (state, { id, text }) => [
   {
@@ -90,6 +91,11 @@ const Item = ({ id, author, dateAdded, text }) => (
 
 export const ItemsList = ({ state }) => (
   <div class="container">
+    {state.items.length == 0 ? <div>
+      No items
+    </div> 
+    : "" }
+
     {state.items.map(item => (
       <div class="row item-row">
         <Item
@@ -107,11 +113,7 @@ export const InputForm = ({ state }) => (
   <div class="container">
     <div class="row">
       <form
-        onsubmit={(_, event) => {
-          event.preventDefault(true);
-          return TodoAdd;
-        }}
-      >
+        onsubmit={preventDefault(TodoAdd)} >
         <input
           class="form-input"
           id="todoitem"
@@ -130,7 +132,7 @@ export const InputForm = ({ state }) => (
           <i class="fa fa-plus" />
         </button>
         <button
-          class="btn btn-warning"
+          class="btn btn-undo"
           type="button"
           disabled={ !state.deleted }
           onClick= { [ Undo, {text: state.deleted}] }

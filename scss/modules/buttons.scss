@@ -45,6 +45,22 @@ Button Modules
   }
 }
 
+.btn-undo {
+  background-color: $color6;
+  color: $color1;
+  border-color: $color3;
+  &:hover {
+    background-color: lighten( $color6, 3%);
+    border-color: white;
+    text-decoration: none;
+  }
+  &[disabled],
+  &:disabled {
+    background: $disabled-background-color;
+    color: $disabled-text-color;
+  }
+}
+
 .btn-login {
   width: 100%;
   @include flexbox-display();
