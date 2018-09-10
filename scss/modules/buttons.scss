@@ -16,48 +16,39 @@ Button Modules
   border-radius: 1px;
   text-decoration: none;
   transition: all 0.3s ease 0s;
-}
-
-.btn-primary {
-  background-color: $color2;
-  color: $color5;
   border-color: $color3;
   &:hover {
-    background-color: lighten( $color2, 3%);
-    border-color: white;
     text-decoration: none;
+    border-color: white;
   }
   &[disabled],
   &:disabled {
     background: $disabled-background-color;
     color: $disabled-text-color;
+  }
+}
+
+.btn-primary {
+  background-color: $color2;
+  color: $color1;
+  &:hover {
+    background-color: lighten( $color2, 5%);
   }
 }
 
 .btn-delete {
   background-color: $color4;
   color: $color1;
-  border-color: $color2;
   &:hover {
-    background-color: lighten( $color4, 3%);
-    border-color: $color1;
-    text-decoration: none;
+    background-color: lighten( $color4, 5%);
   }
 }
 
 .btn-undo {
   background-color: $color6;
   color: $color1;
-  border-color: $color3;
   &:hover {
-    background-color: lighten( $color6, 3%);
-    border-color: white;
-    text-decoration: none;
-  }
-  &[disabled],
-  &:disabled {
-    background: $disabled-background-color;
-    color: $disabled-text-color;
+    background-color: lighten( $color6, 5%);
   }
 }
 

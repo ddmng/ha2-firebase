@@ -2,38 +2,38 @@
 <html lang="en">
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
-        crossorigin="anonymous">
-    <script src="https://cdn.firebase.com/libs/firebaseui/3.3.0/firebaseui.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.3.0/firebaseui.css" />
-    <meta name="Description" content="Lista della spesa.">
-    <link rel="manifest" href="./src/manifest.webmanifest">
-    <meta name="theme-color" content="#ffffff">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <link rel="apple-touch-icon" sizes="180x180" href="./assets/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" href="./assets/icons/favicon.ico">
-    <title>Hyperapp TODO</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+    crossorigin="anonymous">
+  <script src="https://cdn.firebase.com/libs/firebaseui/3.3.0/firebaseui.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.3.0/firebaseui.css" />
+  <meta name="Description" content="Lista della spesa.">
+  <link rel="manifest" href="./src/manifest.webmanifest">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="./assets/icons/favicon.ico">
+  <title>Hyperapp TODO</title>
 </head>
 
 <body>
-        <script src="./src/index.js" async></script>
+  <script src="./src/index.js" async></script>
 
-        <script>
-                if ('serviceWorker' in navigator) {
-                  navigator.serviceWorker.register('sw.js')
-                  .then(function (registration) {
-                    console.log('Service Worker registration successful with scope: ',
-                    registration.scope)
-                  })
-                  .catch(function (err) {
-                    console.log('Service Worker registration failed: ', err)
-                  })
-                }
-              </script>
-            
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(function (registration) {
+          console.log('Service Worker registration successful with scope: ',
+            registration.scope)
+        })
+        .catch(function (err) {
+          console.log('Service Worker registration failed: ', err)
+        })
+    }
+  </script>
+
 </body>
- <noscript>Enable JavaScript</noscript>
+<noscript>Enable JavaScript</noscript>
 </html>
