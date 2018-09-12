@@ -31,7 +31,7 @@ Button Modules
 .btn-primary {
   background-color: $color2;
   color: $color1;
-  &:hover {
+  &:hover[enabled] {
     background-color: lighten( $color2, 5%);
   }
 }
@@ -39,7 +39,7 @@ Button Modules
 .btn-delete {
   background-color: $color4;
   color: $color1;
-  &:hover {
+  &:hover[enabled] {
     background-color: lighten( $color4, 5%);
   }
 }
@@ -47,7 +47,7 @@ Button Modules
 .btn-undo {
   background-color: $color6;
   color: $color1;
-  &:hover {
+  &:hover[enabled] {
     background-color: lighten( $color6, 5%);
   }
 }

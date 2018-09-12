@@ -10,7 +10,7 @@ const initialState = {
   ...authState,
   querying: false,
   items: [],
-  allowAnonymous: true,
+  allowAnonymous: false,
 };
 
 app({
@@ -33,9 +33,6 @@ app({
         {state.loginData.loggedin === "yes" ? <ItemsList state={state} /> : ""}
       </section>
 
-      <footer>
-        <ShowState state={state} />
-      </footer>
     </main>
   ),
   subscriptions: state =>
@@ -44,3 +41,9 @@ app({
 });
 
 console.clear();
+
+/*
+      <footer>
+        <ShowState state={state} />
+      </footer>
+*/

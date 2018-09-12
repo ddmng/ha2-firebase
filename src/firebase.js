@@ -1,7 +1,9 @@
 import firebase from '@firebase/app';
 import '@firebase/firestore'
 import "firebase/auth";
-import { makeEffect } from './utils'
+import {
+    makeEffect
+} from './utils'
 
 /* Firebase configuration */
 const FIREBASE_CONFIG = {
@@ -20,6 +22,24 @@ const settings = { /* your settings... */
     timestampsInSnapshots: true
 };
 db.settings(settings);
+
+
+db.enablePersistence()
+    .catch(function (err) {
+        if (err.code == 'failed-precondition') {
+            // Multiple tabs open, persistence can only be enabled
+            // in one tab at a a time.
+            console.log("failed-precondition")
+        } else if (err.code == 'unimplemented') {
+            // The current browser does not support all of the
+            // features required to enable persistence
+            console.log("unimplemented")
+        } else {
+            console.log("Offline persistence enabled")
+        }
+    });
+
+
 const itemsCollection = "items";
 
 /* Query for items list */
@@ -28,7 +48,9 @@ export const SyncItems = (props) => ({
     props: props
 })
 
-const syncItemsEffect = ({ props }, dispatch) =>
+const syncItemsEffect = ({
+        props
+    }, dispatch) =>
     db.collection(itemsCollection).onSnapshot(querySnapshot => {
         console.log("Received update from firebase!", querySnapshot)
 
@@ -54,7 +76,9 @@ export const Login = (props) => ({
     props: props
 })
 
-const loginEffect = ({ props }, dispatch) => {
+const loginEffect = ({
+    props
+}, dispatch) => {
     console.log("Logging in with props: ", props)
 
     // Added to avoid requiring Google login
@@ -99,7 +123,9 @@ export const Logout = (props) => ({
     props: props
 })
 
-const logoutEffect = ({ props }, dispatch) => {
+const logoutEffect = ({
+    props
+}, dispatch) => {
     console.log("Logging out")
 
     firebase.auth().signOut().then(function () {
@@ -120,7 +146,9 @@ export const DeleteItem = (props) => ({
     props: props
 })
 
-const deleteItemEffect = ({ props }, dispatch) => {
+const deleteItemEffect = ({
+    props
+}, dispatch) => {
     db.collection(itemsCollection).doc(props.item).delete().then(
         () => dispatch(props.success, props.item)
     ).catch(error => {
@@ -134,7 +162,9 @@ export const AddItem = (props) => ({
     props: props
 })
 
-const addItemEffect = ({ props }, dispatch) => {
+const addItemEffect = ({
+    props
+}, dispatch) => {
     db.collection(itemsCollection).doc().set({
         author: props.author,
         text: props.text,
@@ -144,6 +174,5 @@ const addItemEffect = ({ props }, dispatch) => {
     ).catch(error => {
         console.error("Error deleting", props.item, error)
         dispatch(props.failure, error)
-    }
-    )
+    })
 }
