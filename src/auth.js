@@ -47,7 +47,6 @@ export const login = state => [
     }
   },
   Login({
-    anonymous: state.allowAnonymous,
     success: loginSuccess,
     failure: loginError
   })

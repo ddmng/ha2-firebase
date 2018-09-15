@@ -82,39 +82,25 @@ const loginEffect = ({
     console.log("Logging in with props: ", props)
 
     // Added to avoid requiring Google login
-    if (props.anonymous === true) {
-        console.log("Anonyous login set")
+    var provider = new firebase.auth.GoogleAuthProvider();
+    console.log("Signing in with Google")
+    firebase.auth().signInWithPopup(provider).then(function (result) {
+        console.log("Auth: ", result.user.email)
+        localStorage.setItem('email', result.user.email);
+        localStorage.setItem('token', result.credential.accessToken);
         dispatch(props.success, {
-            username: "anonymous"
+            username: result.user.email
         })
-        return;
-    }
-    let savedEmail = localStorage.getItem('email')
-    if (savedEmail) {
-        dispatch(props.success, {
-            username: savedEmail
-        })
-    } else {
-        var provider = new firebase.auth.GoogleAuthProvider();
-        console.log("Signing in with Google")
-        firebase.auth().signInWithPopup(provider).then(function (result) {
-            console.log("Auth: ", result.user.email)
-            localStorage.setItem('email', result.user.email);
-            localStorage.setItem('token', result.credential.accessToken);
-            dispatch(props.success, {
-                username: result.user.email
-            })
-        }).catch(function (error) {
-            var errorMessage = error.message;
-            // The email of the user's account used.
-            var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            var credential = error.credential;
+    }).catch(function (error) {
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
 
-            console.error("Error in auth: ", errorMessage)
-            dispatch(props.failure, error)
-        });
-    }
+        console.error("Error in auth: ", errorMessage)
+        dispatch(props.failure, error)
+    });
 }
 
 /* Logout */
